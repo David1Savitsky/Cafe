@@ -8,9 +8,9 @@
     <div class="container">
         <form method="post" action="controller?command=login">
             <label class="login-row" for="login">login</label>
-            <input class="login-row" type="text" name="login"/>
+            <input id="login" class="login-row" type="text" name="login"/>
             <label class="login-row" for="password">password</label>
-            <input class="login-row" type="password" name="password"/>
+            <input id="password" class="login-row" type="password" name="password"/>
             <input class="login-row" type="submit"/>
         </form>
         <div style="color: red">${errorMessage}</div>

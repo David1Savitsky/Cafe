@@ -17,11 +17,14 @@ public class LoginCommand implements Command {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         if (userService.login(login, password)) {
-            req.getSession().setAttribute("user", "admin");
-            return "WEB-INF/view/main.jsp";
+            //req.getSession().setAttribute("user", "admin");
+
+            //Подгружать с БД его данные
+
+            return "main.jsp";
         } else {
             req.setAttribute("errorMessage", "Invalid credentials");
-            return "index.jsp";
+            return "login.jsp";
         }
     }
 }
