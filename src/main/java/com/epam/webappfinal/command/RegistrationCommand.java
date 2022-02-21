@@ -1,15 +1,10 @@
-package com.epam.webappfinal.controller.command;
+package com.epam.webappfinal.command;
 
-import com.epam.webappfinal.controller.service.UserRegistrationServiceImpl;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DriverCommand;
-import org.openqa.selenium.remote.service.DriverCommandExecutor;
-import org.openqa.selenium.remote.service.DriverService;
+import com.epam.webappfinal.service.UserRegistrationServiceImpl;
 
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class RegistrationCommand implements Command {
 

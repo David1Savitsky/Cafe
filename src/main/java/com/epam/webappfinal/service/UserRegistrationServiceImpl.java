@@ -1,4 +1,4 @@
-package com.epam.webappfinal.controller.service;
+package com.epam.webappfinal.service;
 
 public class UserRegistrationServiceImpl {
 

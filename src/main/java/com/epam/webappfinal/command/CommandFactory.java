@@ -1,7 +1,7 @@
-package com.epam.webappfinal.controller.command;
+package com.epam.webappfinal.command;
 
-import com.epam.webappfinal.controller.service.UserRegistrationServiceImpl;
-import com.epam.webappfinal.controller.service.UserServiceImpl;
+import com.epam.webappfinal.service.UserRegistrationServiceImpl;
+import com.epam.webappfinal.service.UserServiceImpl;
 
 public class CommandFactory {
 
