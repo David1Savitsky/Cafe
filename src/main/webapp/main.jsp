@@ -29,7 +29,10 @@
 
             <div class="logandreg">
 <%--                <a href="login.jsp"><input type="submit" class="login" value=<fmt:message key="exit">></a>--%>
-                <a href="login.jsp"><input type="submit" class="login" value="Выход" ></a>
+                <form method="post" action="controller?command=logout">
+                    <a href="login.jsp"><input type="submit" class="login" value="Выход" ></a>
+                </form>
+
     <%--            или--%>
     <%--            <a href="#" class="register"> Зарегистрироваться</a>--%>
 

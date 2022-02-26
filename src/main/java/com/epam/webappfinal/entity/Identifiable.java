@@ -1,6 +1,8 @@
 package com.epam.webappfinal.entity;
 
-public interface Identifiable {
+import java.io.Serializable;
 
-    Long getId();
+public interface Identifiable extends Serializable {
+
+    Integer getId();
 }

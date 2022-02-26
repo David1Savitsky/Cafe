@@ -12,7 +12,8 @@ public class LoginCommand implements Command {
 
     private final UserService userService;
 
-    public LoginCommand(UserService userService) {
+    public LoginCommand(UserService userService)
+    {
         this.userService = userService;
     }
 
@@ -27,7 +28,7 @@ public class LoginCommand implements Command {
             result = CommandResult.redirect("controller?command=mainPage");
         } else {
             req.setAttribute("errorMessage", "Invalid login or password");
-            result = CommandResult.forward("/index.jsp");
+            result = CommandResult.forward("/login.jsp");
         }
         return result;
     }

@@ -1,6 +1,11 @@
 package com.epam.webappfinal.service;
 
+import com.epam.webappfinal.entity.User;
+import com.epam.webappfinal.exception.ServiceException;
+
+import java.util.Optional;
+
 public interface UserService {
 
-    boolean login(String login, String password);
+    Optional<User> login(String login, String password) throws ServiceException;
 }

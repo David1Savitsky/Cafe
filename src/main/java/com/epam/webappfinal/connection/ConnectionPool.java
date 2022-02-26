@@ -1,14 +1,18 @@
 package com.epam.webappfinal.connection;
 
+import com.epam.webappfinal.exception.DaoException;
+
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
 
+    private static final int MAXIMUM_CONNECTIONS = 10;
+
     private static ConnectionPool connectionPool;
 
-    private static ConnectionFactory connectionFactory = new ConnectionFactory();
+    private final ConnectionFactory connectionFactory = new ConnectionFactory();
 
     private Queue<ProxyConnection> availableConnections;
     private Queue<ProxyConnection> connectionsInUse;
@@ -20,7 +24,7 @@ public class ConnectionPool {
         connectionsInUse = new ArrayDeque<>();
     }
 
-    public static ConnectionPool getInstance() {
+    public static ConnectionPool getInstance() throws DaoException {
         ConnectionPool localConnectionPool = connectionPool;
         if (localConnectionPool == null) {
             connectionsLock.lock();
@@ -28,14 +32,8 @@ public class ConnectionPool {
                 localConnectionPool = connectionPool;
                 if (localConnectionPool == null) {
                     connectionPool = localConnectionPool = new ConnectionPool();
+                    connectionPool.initConnections();
                 }
-
-                //IMPLEMENT!!!
-                //initializeAvailableConnections();
-                //initializeconnectionsInUse();
-
-                connectionFactory.create();
-
             } finally {
                 connectionsLock.unlock();
             }
@@ -43,22 +41,35 @@ public class ConnectionPool {
         return localConnectionPool;
     }
 
+    private void initConnections() throws DaoException {
+        for (int i = 0; i < MAXIMUM_CONNECTIONS; i++) {
+            ProxyConnection proxyConnection = connectionFactory.create();
+            availableConnections.offer(proxyConnection);
+        }
+    }
+
     public void returnConnection(ProxyConnection proxyConnection) {
         connectionsLock.lock();
         try {
             if (connectionsInUse.contains(proxyConnection)) {
                 availableConnections.offer(proxyConnection);
+                connectionsInUse.remove(proxyConnection);
             }
         } finally {
             connectionsLock.unlock();
         }
     }
 
-    public ProxyConnection getConnection() {
-        //start with lock
-        //get from  availableConnections
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        return connectionFactory.create();
+    public ProxyConnection getConnection() throws DaoException {
+        connectionsLock.lock();
+        ProxyConnection proxyConnection;
+        try {
+            proxyConnection = availableConnections.remove();
+            connectionsInUse.offer(proxyConnection);
+        } finally {
+            connectionsLock.unlock();
+        }
+        return proxyConnection;
     }
 
 }

@@ -10,7 +10,7 @@ public class DaoHelper implements AutoCloseable {
 
     private ProxyConnection connection;
 
-    public DaoHelper(ConnectionPool pool) {
+    public DaoHelper(ConnectionPool pool) throws DaoException {
         this.connection = pool.getConnection();
     }
 
