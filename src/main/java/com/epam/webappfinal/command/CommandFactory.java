@@ -9,6 +9,7 @@ public class CommandFactory {
     private static final String LOGOUT_COMMAND = "logout";
     private static final String MAIN_PAGE_COMMAND = "mainPage";
     private static final String LOGIN_AFTER_LOGOUT_COMMAND = "loginAfterLogout";
+    private static final String LANGUAGE_CHANGE_COMMAND = "languageChange";
 
     public Command createCommand(String command) {
         switch (command){
@@ -20,6 +21,8 @@ public class CommandFactory {
                 return new MainPageCommand();
             case LOGIN_AFTER_LOGOUT_COMMAND:
                 return new LoginAfterLogoutCommand();
+            case LANGUAGE_CHANGE_COMMAND:
+                return new LanguageChangeCommand();
             default:
                 throw new IllegalArgumentException("Unknown command = " + command);
         }

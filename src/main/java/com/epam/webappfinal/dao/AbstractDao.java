@@ -51,7 +51,7 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
     public List<T> getAll() throws DaoException {
         String table = getTableName();
         RowMapper<T> mapper = (RowMapper<T>) RowMapper.create(table);
-        return executeQuery("select * from" + table, mapper);
+        return executeQuery("select * from " + table, mapper);
     }
 
     protected Optional<T> executeForSingleResult(String query, Object... params) {

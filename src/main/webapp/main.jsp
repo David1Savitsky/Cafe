@@ -1,14 +1,20 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
-<c:set var="language"
-       value="en"
-       scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="lang"/>
+
+<c:if test="${sessionScope.locale == null}">
+    <c:set var="locale" value="bel" scope="session"/>
+</c:if>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="language"/>
+<fmt:message key="exit" var="btn_exit"/>
+<fmt:message key="belorussianCode" var="bel"/>
+<fmt:message key="englishCode" var="en"/>
+<fmt:message key="ukrainianCode" var="uk"/>
+<fmt:message key="lbl_language" var="lbl_lang"/>
 <html>
     <head>
-        <meta charset="UTF-8">
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="static/styles/main.css">
         <link rel="shortcut icon" href="static/images/address.png" type="image/png">
@@ -19,19 +25,23 @@
             <img class="logo_image" src="static/images/logo.png" alt="">
             <h1 style="color:coral;">Cafe</h1>
 
-            <div class="dropdown">
-                <button class="dropbtn">Русский</button>
-                <div class="dropdown-content">
-                    <a href="#">Белорусский</a>
-                    <a href="#">Английский</a>
+            <form method="post" action="controller?command=languageChange">
+                <div class="dropdown">
+                    <button class="dropbtn">${lbl_lang}</button>
+                    <div class="dropdown-content">
+                        <a><button type="submit" name="locale" value="bel">${bel}</button></a>
+                        <a><button type="submit" name="locale" value="uk">${uk}</button></a>
+                        <a><button type="submit" name="locale" value="en">${en}</button></a>
+                    </div>
                 </div>
-            </div>
+            </form>
+
 
             <div class="logandreg">
 <%--                <a href="login.jsp"><input type="submit" class="login" value=<fmt:message key="exit">></a>--%>
-                <form method="post" action="controller?command=logout">
-                    <a href="login.jsp"><input type="submit" class="login" value="Выход" ></a>
-                </form>
+<%--                <form method="post" action="controller?command=logout">--%>
+                    <a href="controller?command=logout"><input type="submit" class="login" value="${btn_exit}" ></a>
+<%--                </form>--%>
 
     <%--            или--%>
     <%--            <a href="#" class="register"> Зарегистрироваться</a>--%>
