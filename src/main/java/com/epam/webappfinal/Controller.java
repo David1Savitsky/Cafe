@@ -31,7 +31,6 @@ public class Controller extends HttpServlet {
             CommandResult result = action.execute(req, resp);
             dispatch(req, resp, result);
         } catch (Exception e) {
-            //req.setAttribute("errorMessage", e.getMessage());
             dispatch(req, resp, CommandResult.forward("/error.jsp"));
         }
     }
