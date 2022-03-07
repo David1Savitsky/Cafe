@@ -1,4 +1,4 @@
- <%@ page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
 
@@ -7,11 +7,6 @@
 </c:if>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="language"/>
-<fmt:message key="exit" var="btn_exit"/>
-<fmt:message key="belorussianCode" var="bel"/>
-<fmt:message key="englishCode" var="en"/>
-<fmt:message key="ukrainianCode" var="uk"/>
-<fmt:message key="lbl_language" var="lbl_lang"/>
 <html>
 <head>
 
@@ -21,32 +16,8 @@
     <title>Заказать еду</title>
 </head>
 <body>
-<div class="header">
-    <img class="logo_image" src="static/images/logo.png" alt="">
-    <h1 style="color:coral;">Cafe</h1>
 
-    <div class="logandreg">
-        <form method="post" action="controller?command=languageChange">
-            <div class="dropdown">
-                <button class="dropbtn">${lbl_lang}</button>
-                <div class="dropdown-content">
-                    <a><button type="submit" name="locale" value="bel">${bel}</button></a>
-                    <a><button type="submit" name="locale" value="uk">${uk}</button></a>
-                    <a><button type="submit" name="locale" value="en">${en}</button></a>
-                </div>
-            </div>
-        </form>
-
-
-
-        <a href="controller?command=logout"><input type="submit" class="login" value="${btn_exit}" ></a>
-        <a href="#"><span class="cash">123 р</span></a>
-    </div>
-</div>
-
-<div class="content">
-
-</div>
+<c:import url="header.jsp"/>
 
 <div class="topnav">
     <a href="#">Пицца</a>
@@ -104,9 +75,5 @@
     </div>
 </div>
 
-
-<div class="footer">
-    <p>Cafe</p>
-</div>
 </body>
 </html>
