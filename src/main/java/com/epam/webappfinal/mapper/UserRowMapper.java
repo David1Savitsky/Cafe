@@ -10,11 +10,10 @@ import java.sql.SQLException;
 public class UserRowMapper implements RowMapper{
     @Override
     public Identifiable map(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt(User.ID);
+        Long id = resultSet.getLong(User.ID);
         String name = resultSet.getString(User.NAME);
         String surname = resultSet.getString(User.SURNAME);
         String login = resultSet.getString(User.LOGIN);
-        String password = resultSet.getString(User.PASSWORD);
         boolean isAdmin = resultSet.getBoolean(User.IS_ADMIN);
         BigDecimal amount = resultSet.getBigDecimal(User.AMOUNT);
         int loyaltyPoints = resultSet.getInt(User.LOYALTY_POINTS);

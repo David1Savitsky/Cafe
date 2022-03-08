@@ -10,7 +10,7 @@ public class DaoHelper implements AutoCloseable {
 
     private ProxyConnection connection;
 
-    public DaoHelper(ConnectionPool pool) throws DaoException {
+    public DaoHelper(ConnectionPool pool) {
         this.connection = pool.getConnection();
     }
 
@@ -18,13 +18,21 @@ public class DaoHelper implements AutoCloseable {
         return new UserDaoImpl(connection);
     }
 
+    public FoodDao createFoodDao() {
+        return new FoodDaoImpl(connection);
+    }
+
 //    public OrderDao createUserDao() {
 //        return new OrderDao(connection);
 //    }
 
     @Override
-    public void close() throws SQLException {
-        connection.close();
+    public void close() throws DaoException {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     public void startTransaction() throws DaoException {

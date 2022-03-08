@@ -15,7 +15,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public static final String FIND_BY_LOGIN_AND_PASSWORD = "select * from user where login = ? and password = MD5(?) ;";
 
     public UserDaoImpl(Connection connection) {
-        super(connection, new UserRowMapper());
+        super(connection, new UserRowMapper(), User.TABLE_NAME);
     }
 
     @Override
@@ -27,29 +27,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public Optional<User> getById(Long id) {
-        return Optional.empty();
-        // Specification spec = new FindByIdSpecification;
-        // return executeQuery("select * from user where",  spec.toSql(), new UserRowMapper());
-    }
-
-    @Override
     protected Map<String, Object> getFields(User item) {
         Map<String, Object> fields = new LinkedHashMap<>();
         fields.put(User.NAME, item.getName());
         //...
         return fields;
-    }
-
-    @Override
-    public void removeById(Long id) {
-
-    }
-
-
-    @Override
-    protected String getTableName() {
-        return null;
     }
 
 

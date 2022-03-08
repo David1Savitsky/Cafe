@@ -60,7 +60,7 @@ public class ConnectionPool {
         }
     }
 
-    public ProxyConnection getConnection() throws DaoException {
+    public ProxyConnection getConnection() {
         connectionsLock.lock();
         ProxyConnection proxyConnection;
         try {

@@ -15,12 +15,17 @@ import java.util.Optional;
 
 public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
 
+    private static final String GET_BY_ID_QUERY = "SELECT * FROM %s WHERE id = ? ;";
+    private static final String REMOVE_BY_ID_QUERY = "DELETE FROM %s WHERE id = ? ;";
+
     private final Connection connection;
     private final RowMapper<T> rowMapper;
+    private final String tableName;
 
-    protected AbstractDao(Connection connection, RowMapper<T> rowMapper) {
+    public AbstractDao(Connection connection, RowMapper<T> rowMapper, String tableName) {
         this.connection = connection;
         this.rowMapper = rowMapper;
+        this.tableName = tableName;
     }
 
     protected List<T> executeQuery(String query, Object... params) throws DaoException {
@@ -40,27 +45,27 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
         return statement;
     }
 
-    protected boolean executeUpdate(String query, Object... params) throws DaoException {
+    private List<T> extractResultsFromResultSet(ResultSet resultSet) throws SQLException {
+        List<T> entities = new ArrayList<>();
+        while (resultSet.next()) {
+            T entity = rowMapper.map(resultSet);
+            entities.add(entity);
+        }
+        return entities;
+    }
+
+    protected void executeUpdate(String query, Object... params) throws DaoException {
         try (PreparedStatement statement = createStatement(query, params)) {
-            return statement.executeUpdate() > 0;
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
         }
     }
 
-    public List<T> getAll() throws DaoException {
-        String table = getTableName();
-        RowMapper<T> mapper = (RowMapper<T>) RowMapper.create(table);
-        return executeQuery("select * from " + table, mapper);
-    }
-
-    protected Optional<T> executeForSingleResult(String query, Object... params) {
+    protected Optional<T> executeForSingleResult(String query, Object... params) throws DaoException {
         List<T> items = null;
-        try {
-            items = executeQuery(query, params);
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
+
+        items = executeQuery(query, params);
         Integer itemsSize = items.size();
         if(itemsSize == 1) {
             return Optional.of(items.get(0));
@@ -78,25 +83,37 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
         executeUpdate(query);
     }
 
-    private List<T> extractResultsFromResultSet(ResultSet resultSet) throws SQLException {
-        List<T> entities = new ArrayList<>();
-        while (resultSet.next()) {
-            T entity = rowMapper.map(resultSet);
-            entities.add(entity);
-        }
-        return entities;
+    @Override
+    public List<T> getAll() throws DaoException {
+        String table = getTableName();
+        RowMapper<T> mapper = (RowMapper<T>) RowMapper.create(table);
+        return executeQuery("select * from " + table, mapper);
     }
+
+    @Override
+    public Optional<T> getById(Long id) throws DaoException {
+        String query = String.format(GET_BY_ID_QUERY, tableName);
+        return executeForSingleResult(query, id);
+    }
+
+    @Override
+    public void removeById(Long id) throws DaoException {
+        String query = String.format(REMOVE_BY_ID_QUERY, tableName);
+        executeUpdate(query, id);
+    }
+
+    public String generateInsertQuery(Map<String, Object> fields) {
+        throw new UnsupportedOperationException();
+    }
+
+    public String generateUpdateQuery(Map<String, Object> fields) {
+        throw new UnsupportedOperationException();
+    }
+
+    protected String getTableName() {
+        return tableName;
+    }
+
 
     protected abstract Map<String, Object> getFields(T item);
-
-    String generateInsertQuery(Map<String, Object> fields) {
-        throw new UnsupportedOperationException();
-    }
-
-    String generateUpdateQuery(Map<String, Object> fields) {
-        throw new UnsupportedOperationException();
-    }
-
-    protected abstract String getTableName();
-
 }

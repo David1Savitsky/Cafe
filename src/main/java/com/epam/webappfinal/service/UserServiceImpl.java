@@ -18,12 +18,6 @@ public class UserServiceImpl implements UserService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-//    public boolean login(String login, String password) {
-//
-//        //Добавить проверку на наличие такого пользователя в БД
-//        return "admin".equals(login) && "admin".equals(password);
-//    }
-
     public Optional<User> login(String login, String password) throws ServiceException {
         Optional<User> user;
         try (DaoHelper helper = daoHelperFactory.create()) {
@@ -31,7 +25,7 @@ public class UserServiceImpl implements UserService {
             UserDao dao = helper.createUserDao();
             user = dao.findUserByLoginAndPassword(login, password);
             helper.endTransaction();
-        } catch (SQLException | DaoException e) {
+        } catch (DaoException e) {
             throw new ServiceException(e);
         }
         return user;

@@ -1,7 +1,5 @@
 package com.epam.webappfinal.command;
 
-import com.epam.webappfinal.exception.ServiceException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

@@ -7,6 +7,10 @@
 </c:if>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="language"/>
+<fmt:message key="lbl_price" var="lbl_price"/>
+<fmt:message key="btn_add_to_shopping_cart" var="btn_add_to_shopping_cart"/>
+<fmt:message key="drop_meal" var="drop_meal"/>
+<fmt:message key="drop_drink" var="drop_drink"/>
 <html>
 <head>
 
@@ -20,59 +24,77 @@
 <c:import url="header.jsp"/>
 
 <div class="topnav">
-    <a href="#">Пицца</a>
-    <a href="#">Шаурма</a>
-    <a href="#">Кофе</a>
+    <form method="post" action="controller?command=foodChange">
+        <button type="submit" name="foodType" value="drink">${drop_drink}</button>
+        <button type="submit" name="foodType" value="meal">${drop_meal}</button>
+    </form>
+    <a href="controller?command=foodChange">${drop_meal}</a>
+    <a href="controller?command=foodChange">${drop_drink}</a>
 </div>
 
 <div class="row">
-    <div class="column side">
-        <h2>Название</h2>
-        <p>Его описание: выапавывпрпавовавовпоавапаро</p>
-        <p>Цена</p>
-        <a href="#" class="btn_order"> Добавить в корзину</a>
-    </div>
 
-    <div class="column side">
-        <h2>Main Content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
-        <a href="#" class="btn_order"> Добавить в корзину</a>
-    </div>
+    <c:choose>
+        <c:when test="${requestScope.foodListSize > 0}">
+            <c:forEach items="${requestScope.foodList}" var="food">
+                <div class="column side">
+                    <h2>${ food.name }</h2>
+                    <p>${lbl_price}: ${ food.price } р.</p>
+                    <a href="#" class="btn_order">${btn_add_to_shopping_cart}</a>
+                </div>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <h1 style="color: red">Menu items not found...</h1>
+        </c:otherwise>
+    </c:choose>
+<%--    <div class="column side">--%>
+<%--        <h2>Название</h2>--%>
+<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
+<%--        <p>Цена</p>--%>
+<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
+<%--    </div>--%>
 
-    <div class="column side">
-        <h2>Side</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-        <a href="#" class="btn_order"> Добавить в корзину</a>
-    </div>
+<%--    <div class="column side">--%>
+<%--        <h2>Main Content</h2>--%>
+<%--        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>--%>
+<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
+<%--    </div>--%>
 
-    <div class="column side">
-        <h2>Название</h2>
-        <p>Его описание: выапавывпрпавовавовпоавапаро</p>
-        <p>Цена</p>
-        <a href="#" class="btn_order"> Добавить в корзину</a>
-    </div>
+<%--    <div class="column side">--%>
+<%--        <h2>Side</h2>--%>
+<%--        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>--%>
+<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
+<%--    </div>--%>
 
-    <div class="column side">
-        <h2>Название</h2>
-        <p>Его описание: выапавывпрпавовавовпоавапаро</p>
-        <p>Цена</p>
-        <a href="#" class="btn_order"> Добавить в корзину</a>
+<%--    <div class="column side">--%>
+<%--        <h2>Название</h2>--%>
+<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
+<%--        <p>Цена</p>--%>
+<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
+<%--    </div>--%>
 
-    </div>
+<%--    <div class="column side">--%>
+<%--        <h2>Название</h2>--%>
+<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
+<%--        <p>Цена</p>--%>
+<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
 
-    <div class="column side">
-        <h2>Название</h2>
-        <p>Его описание: выапавывпрпавовавовпоавапаро</p>
-        <p>Цена</p>
-        <a href="#" class="btn_order"> Добавить в корзину</a>
-    </div>
+<%--    </div>--%>
 
-    <div class="column side">
-        <h2>Название</h2>
-        <p>Его описание: выапавывпрпавовавовпоавапаро</p>
-        <p>Цена</p>
-        <a href="#" class="btn_order"> Добавить в корзину</a>
-    </div>
+<%--    <div class="column side">--%>
+<%--        <h2>Название</h2>--%>
+<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
+<%--        <p>Цена</p>--%>
+<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
+<%--    </div>--%>
+
+<%--    <div class="column side">--%>
+<%--        <h2>Название</h2>--%>
+<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
+<%--        <p>Цена</p>--%>
+<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
+<%--    </div>--%>
 </div>
 
 </body>

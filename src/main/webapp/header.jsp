@@ -17,7 +17,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/styles/main.css">
+    <link rel="stylesheet" href="static/styles/header.css">
 </head>
 <body>
 <header>
@@ -28,7 +28,9 @@
                 <a href="#"><input type="submit" class="logout" value="${lbl_users}" ></a>
             </div>
             <div class="menu_item">
-                <img class="logo_image" src="static/images/logo.png" alt="">
+                <a href="<c:url value="controller?command=mainPage"/>">
+                    <img class="logo_image" src="static/images/logo.png" alt="">
+                </a>
             </div>
             <div class="menu_item">
                 <div class="button">
@@ -36,9 +38,9 @@
                         <div class="dropdown">
                             <button class="dropbtn">${lbl_lang}</button>
                             <div class="dropdown-content">
-                                <a><button type="submit" name="locale" value="bel">${bel}</button></a>
-                                <a><button type="submit" name="locale" value="uk">${uk}</button></a>
-                                <a><button type="submit" name="locale" value="en">${en}</button></a>
+                                <button type="submit" name="locale" value="bel">${bel}</button>
+                                <button type="submit" name="locale" value="uk">${uk}</button>
+                                <button type="submit" name="locale" value="en">${en}</button>
                             </div>
                         </div>
                     </form>
