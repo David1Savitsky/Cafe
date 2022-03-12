@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface UserService {
 
     Optional<User> login(String login, String password) throws ServiceException;
+
+    boolean isDeposited(User user, String card, String money) throws ServiceException;
 }

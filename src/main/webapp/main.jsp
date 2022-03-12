@@ -28,8 +28,6 @@
         <button type="submit" name="foodType" value="drink">${drop_drink}</button>
         <button type="submit" name="foodType" value="meal">${drop_meal}</button>
     </form>
-    <a href="controller?command=foodChange">${drop_meal}</a>
-    <a href="controller?command=foodChange">${drop_drink}</a>
 </div>
 
 <div class="row">

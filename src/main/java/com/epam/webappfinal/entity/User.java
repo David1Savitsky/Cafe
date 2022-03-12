@@ -22,7 +22,7 @@ public class User implements Identifiable, Serializable {
     private final String surname;
     private final String login;
     private final boolean isAdmin;
-    private final BigDecimal amount;
+    private BigDecimal amount;
     private final Integer loyaltyPoints;
     private final boolean isBlocked;
 
@@ -38,19 +38,54 @@ public class User implements Identifiable, Serializable {
         this.isBlocked = isBlocked;
     }
 
-    public String getName() {
-        return name;
-    }
-
     @Override
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getLogin() {
         return login;
     }
 
+    public String getSurname() {
+        return surname;
+    }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
 
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public Integer getLoyaltyPoints() {
+        return loyaltyPoints;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", login='" + login + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", amount=" + amount +
+                ", loyaltyPoints=" + loyaltyPoints +
+                ", isBlocked=" + isBlocked +
+                '}';
+    }
 }

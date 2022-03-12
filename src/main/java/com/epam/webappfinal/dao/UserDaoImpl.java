@@ -29,10 +29,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     protected Map<String, Object> getFields(User item) {
         Map<String, Object> fields = new LinkedHashMap<>();
+        fields.put(User.ID, item.getId());
         fields.put(User.NAME, item.getName());
-        //...
+        fields.put(User.SURNAME, item.getSurname());
+        fields.put((User.LOGIN), item.getLogin());
+        fields.put((User.IS_ADMIN), item.isAdmin());
+        fields.put((User.AMOUNT), item.getAmount());
+        fields.put((User.LOYALTY_POINTS), item.getLoyaltyPoints());
+        fields.put((User.IS_BLOCKED), item.isBlocked());
         return fields;
     }
-
-
 }

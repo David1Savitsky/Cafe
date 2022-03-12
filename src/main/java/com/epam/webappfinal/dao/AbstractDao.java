@@ -17,6 +17,9 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
 
     private static final String GET_BY_ID_QUERY = "SELECT * FROM %s WHERE id = ? ;";
     private static final String REMOVE_BY_ID_QUERY = "DELETE FROM %s WHERE id = ? ;";
+    private static final String UPDATE_QUERY_BEGINNING = "UPDATE %s SET";
+    private static final String UPDATE_QUERY_END = "WHERE id = ?";
+    private static final String INSERT_QUERY_BEGINNING = "INSERT INTO %s SET";
 
     private final Connection connection;
     private final RowMapper<T> rowMapper;
@@ -62,9 +65,25 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
         }
     }
 
+    protected void executeUpdate(String query, Map<String, Object> valuesMap) throws DaoException {
+        try (PreparedStatement statement = generateFromValuesMap(query, valuesMap)) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    private PreparedStatement generateFromValuesMap(String query, Map<String, Object> valuesMap) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(query);
+        int statementIndex = 1;
+        for (String key : valuesMap.keySet()) {
+            statement.setObject(statementIndex++, valuesMap.get(key));
+        }
+        return statement;
+    }
+
     protected Optional<T> executeForSingleResult(String query, Object... params) throws DaoException {
         List<T> items = null;
-
         items = executeQuery(query, params);
         Integer itemsSize = items.size();
         if(itemsSize == 1) {
@@ -79,8 +98,16 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
     @Override
     public void save(T item) throws DaoException {
         Map<String, Object> fields = getFields(item);
-        String query = item.getId() == null ? generateInsertQuery(fields) : generateUpdateQuery(fields);
-        executeUpdate(query);
+        Object id = fields.remove("id");
+        String query;
+        if (item.getId() == null) {
+            query = buildParametrisedQuery(fields, String.format(INSERT_QUERY_BEGINNING, tableName), ",", "");
+        } else {
+            query = buildParametrisedQuery(fields, String.format(UPDATE_QUERY_BEGINNING, tableName), ",", UPDATE_QUERY_END);
+            fields.put("id", id);
+        }
+
+        executeUpdate(query, fields);
     }
 
     @Override
@@ -102,13 +129,25 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
         executeUpdate(query, id);
     }
 
-    public String generateInsertQuery(Map<String, Object> fields) {
-        throw new UnsupportedOperationException();
+    private String buildParametrisedQuery(Map<String, Object> valuesMap, String queryBeginning, String conditionDelimiter, String queryEnd) {
+        StringBuilder builder = new StringBuilder(queryBeginning);
+        for (String key : valuesMap.keySet()) {
+            builder.append(" " + key + " = ? ");
+            builder.append(conditionDelimiter);
+        }
+        builder.setLength(builder.length() - conditionDelimiter.length());
+        builder.append(" " + queryEnd + " ;");
+        return builder.toString();
     }
 
-    public String generateUpdateQuery(Map<String, Object> fields) {
-        throw new UnsupportedOperationException();
-    }
+
+//    public String generateInsertQuery(Map<String, Object> fields) {
+//        throw new UnsupportedOperationException();
+//    }
+//
+//    public String generateUpdateQuery(Map<String, Object> fields) {
+//        throw new UnsupportedOperationException();
+//    }
 
     protected String getTableName() {
         return tableName;

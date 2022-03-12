@@ -12,6 +12,7 @@ public class CommandFactory {
     private static final String LOGIN_AFTER_LOGOUT_COMMAND = "loginAfterLogout";
     private static final String LANGUAGE_CHANGE_COMMAND = "languageChange";
     private static final String FOOD_TYPE_CHANGE_COMMAND = "foodChange";
+    private static final String FILL_UP_MONEY_COMMAND = "fillUpMoney";
 
     public Command createCommand(String command) {
         switch (command){
@@ -27,6 +28,8 @@ public class CommandFactory {
                 return new LanguageChangeCommand();
             case FOOD_TYPE_CHANGE_COMMAND:
                 return new FoodTypeChangeCommand(new FoodServiceImpl(new DaoHelperFactory()));
+            case FILL_UP_MONEY_COMMAND:
+                return new FillUpMoneyCommand(new UserServiceImpl(new DaoHelperFactory()));
             default:
                 throw new IllegalArgumentException("Unknown command = " + command);
         }

@@ -78,18 +78,18 @@ body {
 }
 
 /* Style the topnav links */
-.topnav a {
+.topnav button {
     float: left;
     display: block;
     color: #f2f2f2;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-
+    font-size: 16px;
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav button:hover {
     background-color: #ddd;
     color: black;
 }
@@ -131,9 +131,9 @@ body {
 }
 
 /* Style the footer */
-.footer {
-    color: #919191;
-    height: 60px;
-    padding: 10px;
-    text-align: center;
-}
+/*.footer {*/
+/*    color: #919191;*/
+/*    height: 60px;*/
+/*    padding: 10px;*/
+/*    text-align: center;*/
+/*}*/
