@@ -52,7 +52,7 @@ body {
     line-height: 33px;
     width: auto;
     padding: 0 20px;
-    color: #10c90a;
+    color: #FB9721;
     font: bold 14px/35px 'Ubuntu',"Myriad Pro",sans-serif;
     border: 1px solid #DFDDDD;
     border-radius: 5px;
@@ -104,13 +104,72 @@ body {
 .column.side {
     border: 1px solid #b6a6a6;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: #DA9B65;
     min-height: 150px;
     margin: 10px;
     width: 23%;
-    color: burlywood;
+    color: #1F0101;
     line-height: 1.5;
 }
+
+.col{
+
+}
+
+.col4{
+    width: 11rem;
+    margin-top: 4px;
+    padding: 0;
+    float: left;
+}
+
+.col4 .q{
+    padding-bottom: 5px;
+}
+
+.minus{
+    display: inline-block;
+    background: url('../images/plus_minus.png') 0 0 no-repeat;
+    width: 36px;
+    height: 35px;
+    text-indent: -9999px;
+    vertical-align: middle;
+}
+
+.col4 .inputbox{
+    background: url('../images/q_inp.png') 0 0 repeat-x;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    width: 40px;
+    text-align: center;
+    border-radius: 0;
+    z-index: 1;
+    margin: 0 -4px;
+    height: 34px;
+    border-bottom: 1px solid #E3E3E3;
+}
+
+.plus{
+    display: inline-block;
+    background: url('../images/plus_minus.png') -36px 0 no-repeat;
+    width: 36px;
+    height: 35px;
+    text-indent: -9999px;
+    vertical-align: middle;
+}
+
+/*.item .col4 .price{*/
+/*    color: #7C7C7C;*/
+/*    font-size: 14px;*/
+/*}*/
+
+/*.item .col4 .total{*/
+/*    color: #7C7C7C;*/
+/*    font-size: 20px;*/
+/*    line-height: 22px;*/
+/*    font-weight: bold;*/
+/*}*/
 
 .row{
     height: 100%;

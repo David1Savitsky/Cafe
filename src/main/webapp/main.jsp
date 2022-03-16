@@ -5,19 +5,23 @@
 <c:if test="${sessionScope.locale == null}">
     <c:set var="locale" value="bel" scope="session"/>
 </c:if>
+<c:if test="${sessionScope.q_input == null}">
+    <c:set var="q_input" value="1"/>
+</c:if>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="language"/>
 <fmt:message key="lbl_price" var="lbl_price"/>
 <fmt:message key="btn_add_to_shopping_cart" var="btn_add_to_shopping_cart"/>
 <fmt:message key="drop_meal" var="drop_meal"/>
 <fmt:message key="drop_drink" var="drop_drink"/>
+<fmt:message key="order_food" var="order_food"/>
 <html>
 <head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/styles/main.css">
     <link rel="shortcut icon" href="static/images/address.png" type="image/png">
-    <title>Заказать еду</title>
+    <title>${order_food}</title>
 </head>
 <body>
 
@@ -38,6 +42,15 @@
                 <div class="column side">
                     <h2>${ food.name }</h2>
                     <p>${lbl_price}: ${ food.price } р.</p>
+                    <div class="col col4">
+                        <div class="q">
+                            <form method="post" action="controller?command=changeQIndex">
+                                <button type="submit" name="type" value="minus"><a class="minus">-</a></button>
+                                <input type="text" name="quantity" class="inputbox q_input" value="${q_input}">
+                                <button type="submit" name="type" value="plus"><a class="plus">+</a></button>
+                            </form>
+                        </div>
+                    </div>
                     <a href="#" class="btn_order">${btn_add_to_shopping_cart}</a>
                 </div>
             </c:forEach>

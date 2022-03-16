@@ -85,12 +85,13 @@ body {
 
 header{
     background-color: #F5DBD3;
+    height: 60px;
 }
 
 .menu_wrapper{
     display: flex;
     justify-content: space-between;
-    height: 100px;
+    height: 60px;
     align-items: center;
     padding-inline: 200px;
 }

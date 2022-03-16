@@ -26,10 +26,10 @@
 </head>
 <body>
 <header>
-    <div class="container">
+    <div>
         <div class="menu_wrapper">
             <div class="menu_item">
-                <a href="#"><input type="submit" class="logout" value="${lbl_shop_cart}" ></a>
+                <a href="controller?command=shoppingCart"><input type="submit" class="logout" value="${lbl_shop_cart}" ></a>
                 <a href="#"><input type="submit" class="logout" value="${lbl_users}" ></a>
             </div>
             <div class="menu_item">
@@ -68,7 +68,7 @@
         <a href="#" class="popup_area"></a>
         <div class="popup_body">
             <div class="popup_content">
-                <a href="" class="popup_close">X</a>
+                <a href="" class="popup_close">×</a>
                 <div class="popup_title">${rechange_account_money}</div>
                 <div class="popup_text">
                     <form method="post" class="fillUpMoney" action="controller?command=fillUpMoney">
