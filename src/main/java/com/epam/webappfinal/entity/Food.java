@@ -47,4 +47,15 @@ public class Food implements Identifiable, Serializable {
     public Long getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", price=" + price +
+                ", isDisabled=" + isDisabled +
+                '}';
+    }
 }

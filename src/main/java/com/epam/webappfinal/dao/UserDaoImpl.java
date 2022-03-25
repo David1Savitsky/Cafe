@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
-    public static final String FIND_BY_LOGIN_AND_PASSWORD = "select * from user where login = ? and password = MD5(?) ;";
+    public static final String FIND_BY_LOGIN_AND_PASSWORD = "select * from users where login = ? and password = MD5(?) ;";
 
     public UserDaoImpl(Connection connection) {
         super(connection, new UserRowMapper(), User.TABLE_NAME);

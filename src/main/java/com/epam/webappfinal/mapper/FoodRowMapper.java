@@ -9,9 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Locale;
 
-public class FoodRowMapper implements RowMapper{
+public class FoodRowMapper implements RowMapper<Food>{
     @Override
-    public Identifiable map(ResultSet resultSet) throws SQLException {
+    public Food map(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong(Food.ID);
         String name = resultSet.getString(Food.NAME);
 

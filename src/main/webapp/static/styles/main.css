@@ -127,6 +127,17 @@ body {
     padding-bottom: 5px;
 }
 
+/*.order-add {*/
+/*    display: flex;*/
+/*    justify-content: flex-end;*/
+/*}*/
+
+/*.order-add img {*/
+/*    width: 30px;*/
+/*    height: 30px;*/
+/*    margin-right: 10px;*/
+/*}*/
+
 .minus{
     display: inline-block;
     background: url('../images/plus_minus.png') 0 0 no-repeat;

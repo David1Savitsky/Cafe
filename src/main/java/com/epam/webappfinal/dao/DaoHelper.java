@@ -22,6 +22,14 @@ public class DaoHelper implements AutoCloseable {
         return new FoodDaoImpl(connection);
     }
 
+    public OrderDao createOrderDao() {
+        return new OrderDaoImpl(connection);
+    }
+
+    public OrdersFoodDao createOrdersFoodDao() {
+        return new OrdersFoodDaoImpl(connection);
+    }
+
 //    public OrderDao createUserDao() {
 //        return new OrderDao(connection);
 //    }

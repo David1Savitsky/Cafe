@@ -35,97 +35,97 @@
     <div class="container">
         <div class="wrapper">
             <h1>${title_SC}</h1>
-            <div class="content">
-                <div class="items">
-                    <div class="item">
-                        <div class="col col1">
-                            <a href="#" class="remove">${delete}</a>
-                        </div>
-                        <div class="col col3">
-                            <div class="title">Название1</div>
-                            <div class="prc">Цена: {5} р</div>
-                        </div>
-                        <div class="col col4">
-                            <div class="q">
-                                <a href="#" class="minus">-</a>
-                                <input type="text" name="quantity" class="inputbox q_input" value="{2}">
-                                <a href="#" class="plus">+</a>
-                            </div>
-                            <div class="price">× {5} р</div>
-                            <div class="total">= {14} р</div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="col col1">
-                            <a href="#" class="remove">Удалить</a>
-                        </div>
-                        <div class="col col3">
-                            <div class="title">Название</div>
-                            <div class="prc">Цена: {5} р</div>
-                        </div>
-                        <div class="col col4">
-                            <div class="q">
-                                <a href="#" class="minus">-</a>
-                                <input type="text" name="quantity" class="inputbox q_input" value="{2}">
-                                <a href="#" class="plus">+</a>
-                            </div>
-                            <div class="price">× {5} р</div>
-                            <div class="total">= {14} р</div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="col col1">
-                            <a href="#" class="remove">Удалить</a>
-                        </div>
-                        <div class="col col3">
-                            <div class="title">Название</div>
-                            <div class="prc">Цена: {5} р</div>
-                        </div>
-                        <div class="col col4">
-                            <div class="q">
-                                <a href="#" class="minus">-</a>
-                                <input type="text" name="quantity" class="inputbox q_input" value="{2}">
-                                <a href="#" class="plus">+</a>
-                            </div>
-                            <div class="price">× {5} р</div>
-                            <div class="total">= {14} р</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right-cart">
-                    <div class="confirm">
-                        <div class="total">
-                            ${price_text_start}<br>${price_text_end} {14} р
-                        </div>
-                        <div class="loyalty-score">
-                            ${lbl_points} {11}
-                        </div>
-                        <div class="date">
-                            <label for="date">${date_and_time}</label>
-                            <input type="datetime" id="date">
-                            <input type="datetime-local">
-                        </div>
-                        <div class="payment-method">
-                            <div class="heading">${lbl_payment_method}</div>
-                            <div class="content">
-                                <div>
-                                    <input type="radio" id="cash" name="money" checked>
-                                    <label for="cash">${lbl_cash}</label>
-                                </div>
+            <c:choose>
+                <c:when test="${requestScope.foodListSize > 0}">
+                    <div class="content">
+                        <div class="items">
+                            <c:forEach items="${requestScope.foodList}" var="food">
+                                <div class="item">
+                                    <div class="col col1">
+                                        <form method="post" action="controller?command=deleteFromShopCart">
+                                            <button class="remove" type="submit" name="foodId" value="${food.key.id}">${delete}</button>
+                                        </form>
+                                    </div>
+                                    <div class="col col3">
+                                        <div class="title">${food.key.name}</div>
+                                        <div class="prc">Цена: ${food.key.price} р</div>
+                                    </div>
+                                    <div class="col col4">
+                                        <div class="q">
+                                            <form method="post" action="controller?command=decrementFoodInShopCart">
+                                                <button class="minus" type="submit" name="foodId" value="${food.key.id}">-</button>
+                                                <input type="text" name="quantity" class="inputbox q_input" readonly value="${food.value}">
+                                            </form>
 
-                                <div>
-                                    <input type="radio" id="account" name="money">
-                                    <label for="account">${lbl_account}</label>
+                                            <form method="post" action="controller?command=incrementFoodInShopCart">
+                                                <button class="plus" type="submit" name="foodId" value="${food.key.id}">+</button>
+                                            </form>
+                                        </div>
+                                        <div class="price">× ${food.key.price} р</div>
+                                        <div class="total">= ${food.value * food.key.price} р</div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+
+                            <div class="item">
+                                <div class="col col1">
+                                    <a href="#" class="remove">${delete}</a>
+                                </div>
+                                <div class="col col3">
+                                    <div class="title">Название1</div>
+                                    <div class="prc">Цена: {5} р</div>
+                                </div>
+                                <div class="col col4">
+                                    <div class="q">
+                                        <a href="#" class="minus">-</a>
+                                        <input type="text" name="quantity" class="inputbox q_input" value="{2}">
+                                        <a href="#" class="plus">+</a>
+                                    </div>
+                                    <div class="price">× {5} р</div>
+                                    <div class="total">= {14} р</div>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="payment_btn">
-                            <a href="#" class="button btn-green go">${lbl_pay}</a>
+                        <div class="right-cart">
+                            <div class="confirm">
+                                <div class="total">
+                                        ${price_text_start}<br>${price_text_end} ${totalAmount} р
+                                </div>
+                                <div class="loyalty-score">
+                                        ${lbl_points} ${totalAmount}
+                                </div>
+                                <div class="date">
+                                    <label for="date">${date_and_time}</label>
+                                    <input type="datetime" id="date">
+                                    <input type="datetime-local">
+                                </div>
+                                <div class="payment-method">
+                                    <div class="heading">${lbl_payment_method}</div>
+                                    <div class="content">
+                                        <div>
+                                            <input type="radio" id="cash" name="money" checked>
+                                            <label for="cash">${lbl_cash}</label>
+                                        </div>
+
+                                        <div>
+                                            <input type="radio" id="account" name="money">
+                                            <label for="account">${lbl_account}</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="payment_btn">
+                                    <a href="#" class="button btn-green go">${lbl_pay}</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </c:when>
+                <c:otherwise>
+                    <h1 style="color: gray">Shopping cart is empty</h1>
+                </c:otherwise>
+            </c:choose>
+
 
         </div>
 

@@ -5,13 +5,12 @@ import java.math.BigDecimal;
 
 public class User implements Identifiable, Serializable {
 
-    public static final String TABLE_NAME = "user";
+    public static final String TABLE_NAME = "users";
 
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
     public static final String LOGIN = "login";
-    public static final String PASSWORD = "password";
     public static final String IS_ADMIN = "is_admin";
     public static final String AMOUNT = "amount";
     public static final String LOYALTY_POINTS = "loyalty_points";

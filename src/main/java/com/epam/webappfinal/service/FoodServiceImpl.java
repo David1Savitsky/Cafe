@@ -8,7 +8,6 @@ import com.epam.webappfinal.entity.FoodType;
 import com.epam.webappfinal.exception.DaoException;
 import com.epam.webappfinal.exception.ServiceException;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

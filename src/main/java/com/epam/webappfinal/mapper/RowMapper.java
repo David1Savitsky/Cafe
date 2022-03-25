@@ -1,8 +1,6 @@
 package com.epam.webappfinal.mapper;
 
-import com.epam.webappfinal.entity.Food;
-import com.epam.webappfinal.entity.Identifiable;
-import com.epam.webappfinal.entity.User;
+import com.epam.webappfinal.entity.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +15,10 @@ public interface RowMapper<T extends Identifiable> {
                 return  new UserRowMapper();
             case Food.TABLE_NAME:
                 return new FoodRowMapper();
+            case Order.TABLE_NAME:
+                return new OrderRowMapper();
+            case OrdersFood.TABLE_NAME:
+                return new OrdersFoodRowMapper();
             default:
                 throw new IllegalArgumentException("Unknown table = " + table);
         }

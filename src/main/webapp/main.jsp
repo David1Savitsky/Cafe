@@ -42,16 +42,24 @@
                 <div class="column side">
                     <h2>${ food.name }</h2>
                     <p>${lbl_price}: ${ food.price } р.</p>
-                    <div class="col col4">
-                        <div class="q">
-                            <form method="post" action="controller?command=changeQIndex">
-                                <button type="submit" name="type" value="minus"><a class="minus">-</a></button>
-                                <input type="text" name="quantity" class="inputbox q_input" value="${q_input}">
-                                <button type="submit" name="type" value="plus"><a class="plus">+</a></button>
-                            </form>
-                        </div>
-                    </div>
-                    <a href="#" class="btn_order">${btn_add_to_shopping_cart}</a>
+                        <%--<div class="col col4">
+                            <div class="q">
+                                <form method="post" action="controller?command=changeQIndex">
+                                    <button type="submit" name="type" value="minus"><a class="minus">-</a></button>
+                                    <input type="text" name="quantity" class="inputbox q_input" value="${q_input}">
+                                    <button type="submit" name="type" value="plus"><a class="plus">+</a></button>
+                                </form>
+                            </div>
+                        </div>--%>
+<%--                    <div class="order-add">--%>
+<%--                        <c:if test="${is_added eq 'true'}">--%>
+<%--                            <img src="static/images/check-mark.png" alt="">--%>
+<%--                        </c:if>--%>
+                        <form method="post" action="controller?command=addToShoppingCart">
+                            <button class="btn_order" type="submit" name="foodId" value="${food.id}">${btn_add_to_shopping_cart}</button>
+                        </form>    
+<%--                    </div>--%>
+                    
                 </div>
             </c:forEach>
         </c:when>

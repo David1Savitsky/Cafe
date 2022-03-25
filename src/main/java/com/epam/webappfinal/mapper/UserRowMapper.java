@@ -7,9 +7,9 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserRowMapper implements RowMapper{
+public class UserRowMapper implements RowMapper<User>{
     @Override
-    public Identifiable map(ResultSet resultSet) throws SQLException {
+    public User map(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong(User.ID);
         String name = resultSet.getString(User.NAME);
         String surname = resultSet.getString(User.SURNAME);

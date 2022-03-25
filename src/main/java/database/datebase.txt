@@ -2,7 +2,7 @@ create database cafe
 
 use cafe
 
-create table user(
+create table users(
     id int primary key auto_increment,
     name varchar(50) not null,
     surname varchar(50) not null,
@@ -22,7 +22,7 @@ create table food(
     is_disabled bool not null default 0
 );
 
-create table user_order(
+create table orders(
     id int primary key auto_increment,
     visiting_time datetime not null,
     user_id int not null,
@@ -34,11 +34,11 @@ create table user_order(
     foreign key (user_id) references user(id)
 );
 
-create table user_order_food(
+create table orders_food(
     id int primary key auto_increment,
-	user_order_id int not null,
+	order_id int not null,
     food_id int not null,
     count int not null,
-    foreign key (user_order_id) references user_order(id),
+    foreign key (order_id) references orders(id),
     foreign key (food_id) references food(id)
 );

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
-    private static final Integer cardNumberLength = 3;
+    private static final Integer cardNumberLength = 16;
 
     private DaoHelperFactory daoHelperFactory;
 
@@ -36,23 +36,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isDeposited(User user, String card, String money) throws ServiceException {
         Integer moneyInt;
-        Integer cardInt;
+        Integer cardIntFirstPart;
+        Integer cardIntSecondPart;
+
         try {
             moneyInt = Integer.parseInt(money);
             if (card.length() != cardNumberLength) {
                 return false;
             }
-            cardInt = Integer.parseInt(card);
-        } catch (Exception e) {
+            cardIntFirstPart = Integer.parseInt(card.substring(0, cardNumberLength / 2 - 1));
+            cardIntSecondPart = Integer.parseInt(card.substring(cardNumberLength / 2), cardNumberLength - 1);
+        } catch (NumberFormatException e) {
             return false;
         }
-        if (moneyInt <= 0 || cardInt <= 0) {
+        if (moneyInt <= 0 || cardIntFirstPart <= 0 || cardIntSecondPart <= 0) {
             return false;
         }
-        user.setAmount((BigDecimal.valueOf(moneyInt).add(user.getAmount())));
 
         try (DaoHelper helper = daoHelperFactory.create()) {
             helper.startTransaction();
+            user.setAmount((BigDecimal.valueOf(moneyInt).add(user.getAmount())));
             UserDao dao = helper.createUserDao();
             dao.save(user);
             helper.endTransaction();
