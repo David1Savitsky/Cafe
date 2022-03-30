@@ -28,11 +28,11 @@
         <p>${lbl_login}</p>
         <div class="logpass">
             <label for="login">${login}:</label><br>
-            <input class="shadow" id="login" class="login-row" type="text" name="login"/><br>
+            <input class="shadow" id="login" type="text" name="login"/><br>
             <label for="password">${password}:</label><br>
             <input class="shadow" id="password" type="password" name="password"/>
         </div>
-        <div style="color: red">${errorMessage}</div>
+        <div style="color: red">${requestScope.errorMessage}</div>
         <a href="registration.jsp">${registrate}</a>
         <input type="submit" class="login_input" value="${enter}">
     </form>

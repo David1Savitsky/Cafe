@@ -3,6 +3,8 @@ package com.epam.webappfinal.dao;
 import com.epam.webappfinal.entity.Identifiable;
 import com.epam.webappfinal.exception.DaoException;
 import com.epam.webappfinal.mapper.RowMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +22,8 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
     private static final String UPDATE_QUERY_BEGINNING = "UPDATE %s SET";
     private static final String UPDATE_QUERY_END = "WHERE id = ?";
     private static final String INSERT_QUERY_BEGINNING = "INSERT INTO %s SET";
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private final Connection connection;
     private final RowMapper<T> rowMapper;
@@ -61,6 +65,9 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
         try (PreparedStatement statement = createStatement(query, params)) {
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOGGER.throwing(e);
+            LOGGER.info("got it");
+            System.out.println(e);
             throw new DaoException(e);
         }
     }

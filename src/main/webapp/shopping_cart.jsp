@@ -19,6 +19,7 @@
 <fmt:message key="lbl_cash" var="lbl_cash"/>
 <fmt:message key="lbl_account" var="lbl_account"/>
 <fmt:message key="lbl_pay" var="lbl_pay"/>
+<fmt:message key="empty_shop_cart" var="empty_shop_cart"/>
 
 <html>
 <head>
@@ -34,9 +35,9 @@
 <section>
     <div class="container">
         <div class="wrapper">
-            <h1>${title_SC}</h1>
             <c:choose>
                 <c:when test="${requestScope.foodListSize > 0}">
+                    <h1>${title_SC}</h1>
                     <div class="content">
                         <div class="items">
                             <c:forEach items="${requestScope.foodList}" var="food">
@@ -66,63 +67,44 @@
                                     </div>
                                 </div>
                             </c:forEach>
-
-                            <div class="item">
-                                <div class="col col1">
-                                    <a href="#" class="remove">${delete}</a>
-                                </div>
-                                <div class="col col3">
-                                    <div class="title">Название1</div>
-                                    <div class="prc">Цена: {5} р</div>
-                                </div>
-                                <div class="col col4">
-                                    <div class="q">
-                                        <a href="#" class="minus">-</a>
-                                        <input type="text" name="quantity" class="inputbox q_input" value="{2}">
-                                        <a href="#" class="plus">+</a>
-                                    </div>
-                                    <div class="price">× {5} р</div>
-                                    <div class="total">= {14} р</div>
-                                </div>
-                            </div>
                         </div>
                         <div class="right-cart">
-                            <div class="confirm">
+                            <form class="confirm" method="post" action="controller?command=payOrder">
                                 <div class="total">
-                                        ${price_text_start}<br>${price_text_end} ${totalAmount} р
+                                    ${price_text_start}<br>${price_text_end} ${requestScope.totalAmount} р
+                                    <input type="hidden" name="total" value="${requestScope.totalAmount}">
                                 </div>
                                 <div class="loyalty-score">
-                                        ${lbl_points} ${totalAmount}
+                                        ${lbl_points} ${requestScope.totalAmount}<br>
                                 </div>
                                 <div class="date">
                                     <label for="date">${date_and_time}</label>
-                                    <input type="datetime" id="date">
-                                    <input type="datetime-local">
+                                    <input type="datetime-local" name="date" id="date">
                                 </div>
                                 <div class="payment-method">
                                     <div class="heading">${lbl_payment_method}</div>
                                     <div class="content">
                                         <div>
-                                            <input type="radio" id="cash" name="money" checked>
+                                            <input type="radio" id="cash" name="type" value="cash" checked>
                                             <label for="cash">${lbl_cash}</label>
                                         </div>
 
                                         <div>
-                                            <input type="radio" id="account" name="money">
+                                            <input type="radio" id="account" name="type" value="account">
                                             <label for="account">${lbl_account}</label>
                                         </div>
                                     </div>
-
+                                    <div style="color: red">${sessionScope.orderError}</div>
                                 </div>
                                 <div class="payment_btn">
-                                    <a href="#" class="button btn-green go">${lbl_pay}</a>
+                                    <button class="button btn-green go" type="submit">${lbl_pay}</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <h1 style="color: gray">Shopping cart is empty</h1>
+                    <h1 style="color: gray">${empty_shop_cart}</h1>
                 </c:otherwise>
             </c:choose>
 

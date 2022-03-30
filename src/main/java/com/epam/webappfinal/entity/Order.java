@@ -1,6 +1,7 @@
 package com.epam.webappfinal.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Order implements Identifiable, Serializable {
@@ -17,7 +18,7 @@ public class Order implements Identifiable, Serializable {
     public static final String IS_ORDERED = "is_ordered";
 
     private final Long id;
-    private final Date visitingTime;
+    private final LocalDateTime visitingTime;
     private final Long userId;
     private final PaymentType paymentType;
     private final Integer rating;
@@ -25,7 +26,7 @@ public class Order implements Identifiable, Serializable {
     private final boolean isTaken;
     private final boolean isOrdered;
 
-    public Order(Long id, Date visitingTime, Long userId, PaymentType paymentType, Integer rating, String comment, boolean isTaken, boolean isOrdered) {
+    public Order(Long id, LocalDateTime visitingTime, Long userId, PaymentType paymentType, Integer rating, String comment, boolean isTaken, boolean isOrdered) {
         this.id = id;
         this.visitingTime = visitingTime;
         this.userId = userId;
@@ -36,7 +37,7 @@ public class Order implements Identifiable, Serializable {
         this.isOrdered = isOrdered;
     }
 
-    public Date getVisitingTime() {
+    public LocalDateTime getVisitingTime() {
         return visitingTime;
     }
 

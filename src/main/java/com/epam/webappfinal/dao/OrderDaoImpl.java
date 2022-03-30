@@ -5,6 +5,7 @@ import com.epam.webappfinal.exception.DaoException;
 import com.epam.webappfinal.mapper.OrderRowMapper;
 
 import java.sql.Connection;
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
 
     private static final String GET_ORDERS_IN_PROCESS_QUERY = "select * from orders where user_id = %d and is_taken = false and is_ordered = false; ";
     private static final String INSERT_ORDER_QUERY = "insert into orders set user_id = %d; ";
+    private static final String SET_ORDER = "update orders set visiting_time = ?, payment_type = ?, is_ordered = true where id = ?;";
 
     public OrderDaoImpl(Connection connection) {
         super(connection, new OrderRowMapper(), Order.TABLE_NAME);
@@ -45,8 +47,13 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
 
     @Override
     public Long makeOrder(Long userId) throws DaoException {
-        String query = String.format(INSERT_ORDER_QUERY, Order.TABLE_NAME);
+        String query = String.format(INSERT_ORDER_QUERY, userId);
         executeUpdate(query);
         return getOrderIdInProcess(userId);
+    }
+
+    @Override
+    public void setOrder(Long orderId, LocalDateTime date, String paymentType) throws DaoException {
+        executeUpdate(SET_ORDER, date, paymentType, orderId);
     }
 }

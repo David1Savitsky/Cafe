@@ -14,10 +14,6 @@ public interface OrdersFoodDao extends Dao<OrdersFood> {
 
     Long makeOrderFood(Long orderId, Long foodId) throws DaoException;
 
-//    void deleteOrderFood(Long orderId, Long foodId) throws DaoException;
-//
-//    void incrementOrderFood(Long orderId, Long foodId) throws DaoException;
-
     void operateWithOrderDao(Long orderId, Long foodId, OperationType operation) throws DaoException;
 
     List<Pair<Food, Integer>> getFoodInShoppingCart(Long orderId) throws DaoException;

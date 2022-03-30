@@ -1,21 +1,23 @@
 package com.epam.webappfinal.service;
 
-import com.epam.webappfinal.dao.DaoHelper;
-import com.epam.webappfinal.dao.DaoHelperFactory;
-import com.epam.webappfinal.dao.OrderDao;
-import com.epam.webappfinal.dao.OrdersFoodDao;
+import com.epam.webappfinal.dao.*;
 import com.epam.webappfinal.entity.Food;
+import com.epam.webappfinal.entity.PaymentType;
+import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.DaoException;
 import com.epam.webappfinal.exception.ServiceException;
 import javafx.util.Pair;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderServiceImpl implements OrderService{
 
     private static final Double DISCOUNT_FACTOR = 0.001;
+    public static final int MAX_POINTS_NUMBER = 100;
 
     private final DaoHelperFactory daoHelperFactory;
 
@@ -123,5 +125,43 @@ public class OrderServiceImpl implements OrderService{
         BigDecimal discount = totalAmount.multiply(new BigDecimal(loyaltyPoints * DISCOUNT_FACTOR));
         discount = discount.setScale(0, RoundingMode.HALF_UP);
         return totalAmount.subtract(discount);
+    }
+
+    @Override
+    public boolean payOrder(User user, BigDecimal totalAmount, String dateStr, PaymentType paymentType) throws ServiceException {
+        if ("".equals(dateStr)) {
+            return false;
+        }
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime date = LocalDateTime.parse(dateStr);
+        int flag = date.compareTo(now);
+        if ((date.compareTo(now) <= 0) || (user.getAmount().compareTo(totalAmount) == -1)) {
+            return false;
+        }
+
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            if (paymentType.equals(PaymentType.ACCOUNT)) {
+                user.setAmount(user.getAmount().subtract(totalAmount));
+            }
+            int loyaltyPoints = user.getLoyaltyPoints();
+            Integer totalAmountInt = Integer.valueOf(totalAmount.intValue());
+            if ((loyaltyPoints + totalAmountInt) >= MAX_POINTS_NUMBER) {
+                user.setLoyaltyPoints(MAX_POINTS_NUMBER);
+            } else {
+                user.setLoyaltyPoints(loyaltyPoints + totalAmountInt);
+            }
+            UserDao userDao = helper.createUserDao();
+            userDao.save(user);
+
+            OrderDao orderDao = helper.createOrderDao();
+            Long orderId = orderDao.getOrderIdInProcess(user.getId());
+            orderDao.setOrder(orderId, date, paymentType.toString().toLowerCase(Locale.ROOT));
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+
+        return true;
     }
 }

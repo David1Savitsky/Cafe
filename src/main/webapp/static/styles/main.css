@@ -112,6 +112,31 @@ body {
     line-height: 1.5;
 }
 
+.elem {
+    font-size: 1.5em;
+    color: burlywood;
+    text-decoration: underline;
+}
+
+.remove{
+    display: inline-block;
+    text-indent: -999999px;
+    background: url('../images/delete_img.png') 0 0 no-repeat;
+    width: 14px;
+    height: 13px;
+}
+
+.elem1 {
+    text-decoration: underline;
+    color: burlywood;
+}
+
+.elem2 {
+    width: 35px;
+    color: burlywood;
+    text-decoration: underline;
+}
+
 .col{
 
 }

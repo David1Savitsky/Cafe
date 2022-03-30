@@ -23,7 +23,7 @@ public class FoodServiceImpl implements FoodService {
     public List<Food> getFood(FoodType foodType) throws ServiceException {
         try (DaoHelper helper = daoHelperFactory.create()) {
             helper.startTransaction();
-            List<Food> foodList = new ArrayList<>();
+//            List<Food> foodList = new ArrayList<>();
             List<Food> listFromDao = new ArrayList<>();
             FoodDao foodDao = helper.createFoodDao();
             switch (foodType) {
@@ -36,11 +36,11 @@ public class FoodServiceImpl implements FoodService {
                 case MEAL:
                     listFromDao = foodDao.getAllNotDisabledMeal();
             }
-            for (Food food : listFromDao) {
-                foodList.add(food);
-            }
+//            for (Food food : listFromDao) {
+//                foodList.add(food);
+//            }
             helper.endTransaction();
-            return foodList;
+            return listFromDao;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

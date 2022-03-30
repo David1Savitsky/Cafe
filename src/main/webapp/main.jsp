@@ -5,9 +5,6 @@
 <c:if test="${sessionScope.locale == null}">
     <c:set var="locale" value="bel" scope="session"/>
 </c:if>
-<c:if test="${sessionScope.q_input == null}">
-    <c:set var="q_input" value="1"/>
-</c:if>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="language"/>
 <fmt:message key="lbl_price" var="lbl_price"/>
@@ -15,6 +12,11 @@
 <fmt:message key="drop_meal" var="drop_meal"/>
 <fmt:message key="drop_drink" var="drop_drink"/>
 <fmt:message key="order_food" var="order_food"/>
+<fmt:message key="items_not_found" var="items_not_found"/>
+<fmt:message key="save_changes" var="save_changes"/>
+<fmt:message key="food_name" var="food_name"/>
+<fmt:message key="on_english" var="on_english"/>
+<fmt:message key="btn_add_to_menu" var="btn_add_to_menu"/>
 <html>
 <head>
 
@@ -35,85 +37,50 @@
 </div>
 
 <div class="row">
-
     <c:choose>
         <c:when test="${requestScope.foodListSize > 0}">
             <c:forEach items="${requestScope.foodList}" var="food">
                 <div class="column side">
-                    <h2>${ food.name }</h2>
-                    <p>${lbl_price}: ${ food.price } р.</p>
-                        <%--<div class="col col4">
-                            <div class="q">
-                                <form method="post" action="controller?command=changeQIndex">
-                                    <button type="submit" name="type" value="minus"><a class="minus">-</a></button>
-                                    <input type="text" name="quantity" class="inputbox q_input" value="${q_input}">
-                                    <button type="submit" name="type" value="plus"><a class="plus">+</a></button>
-                                </form>
-                            </div>
-                        </div>--%>
-<%--                    <div class="order-add">--%>
-<%--                        <c:if test="${is_added eq 'true'}">--%>
-<%--                            <img src="static/images/check-mark.png" alt="">--%>
-<%--                        </c:if>--%>
-                        <form method="post" action="controller?command=addToShoppingCart">
-                            <button class="btn_order" type="submit" name="foodId" value="${food.id}">${btn_add_to_shopping_cart}</button>
-                        </form>    
-<%--                    </div>--%>
-                    
+                    <c:choose>
+                        <c:when test="${sessionScope.users.admin}">
+                            <form method="post" action="controller?command=saveFoodItem">
+                                <div style="display: flex">
+                                    <input class="elem" type="text" name="name" value="${food.name}">
+                                    <form method="post" action="controller?command=deleteFoodItem">
+                                        <button class="remove" type="submit" name="foodId" value="${food.id}">${delete}</button>
+                                    </form>
+                                </div>
+                                <p>${lbl_price}: <input class="elem2" type="number" name="price" value="${food.price}">р.</p>
+
+                                <button class="btn_order" type="submit" name="foodId" value="${food.id}">${save_changes}</button>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <h2>${food.name}</h2>
+                            <p>${lbl_price}: ${food.price} р.</p>
+                            <form method="post" action="controller?command=addToShoppingCart">
+                                <button class="btn_order" type="submit" name="foodId" value="${food.id}">${btn_add_to_shopping_cart}</button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </c:forEach>
         </c:when>
         <c:otherwise>
-            <h1 style="color: red">Menu items not found...</h1>
+            <h1 style="color: red">${items_not_found}...</h1>
         </c:otherwise>
     </c:choose>
-<%--    <div class="column side">--%>
-<%--        <h2>Название</h2>--%>
-<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
-<%--        <p>Цена</p>--%>
-<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
-<%--    </div>--%>
+    <c:if test="${sessionScope.users.admin}">
+        <div class="column side">
+            <form method="post" action="controller?command=addFoodItem">
+                <input class="elem" type="text" name="name" value="${food_name}">
+                <p>${lbl_price}: <input class="elem2" type="number" name="price" value="0">р.</p>
+                <p>Тип блюда: <input class="elem1" type="text" name="type" value="${on_english}"></p>
 
-<%--    <div class="column side">--%>
-<%--        <h2>Main Content</h2>--%>
-<%--        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>--%>
-<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
-<%--    </div>--%>
-
-<%--    <div class="column side">--%>
-<%--        <h2>Side</h2>--%>
-<%--        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>--%>
-<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
-<%--    </div>--%>
-
-<%--    <div class="column side">--%>
-<%--        <h2>Название</h2>--%>
-<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
-<%--        <p>Цена</p>--%>
-<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
-<%--    </div>--%>
-
-<%--    <div class="column side">--%>
-<%--        <h2>Название</h2>--%>
-<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
-<%--        <p>Цена</p>--%>
-<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
-
-<%--    </div>--%>
-
-<%--    <div class="column side">--%>
-<%--        <h2>Название</h2>--%>
-<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
-<%--        <p>Цена</p>--%>
-<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
-<%--    </div>--%>
-
-<%--    <div class="column side">--%>
-<%--        <h2>Название</h2>--%>
-<%--        <p>Его описание: выапавывпрпавовавовпоавапаро</p>--%>
-<%--        <p>Цена</p>--%>
-<%--        <a href="#" class="btn_order"> Добавить в корзину</a>--%>
-<%--    </div>--%>
+                <button class="btn_order" type="submit" name="foodId" value="{food.id}">${btn_add_to_menu}</button>
+            </form>
+        </div>
+    </c:if>
 </div>
 
 </body>

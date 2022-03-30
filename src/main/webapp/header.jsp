@@ -19,6 +19,7 @@
 <fmt:message key="card_number" var="card_number"/>
 <fmt:message key="rechange" var="rechange"/>
 <fmt:message key="sum" var="sum"/>
+<fmt:message key="lbl_orders" var="lbl_orders"/>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,9 +29,17 @@
 <header>
     <div>
         <div class="menu_wrapper">
+            <c:set var="user" value="${sessionScope.users}"/>
             <div class="menu_item">
-                <a href="controller?command=shoppingCart"><input type="submit" class="logout" value="${lbl_shop_cart}" ></a>
-                <a href="#"><input type="submit" class="logout" value="${lbl_users}" ></a>
+                <c:choose>
+                    <c:when test="${user.admin}">
+                        <a href="#"><input type="submit" class="logout" value="${lbl_users}" ></a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="controller?command=shoppingCart"><input type="submit" class="logout" value="${lbl_shop_cart}" ></a>
+                    </c:otherwise>
+                </c:choose>
+                <a href="#"><input type="submit" class="logout" value="${lbl_orders}" ></a>
             </div>
             <div class="menu_item">
                 <a href="<c:url value="controller?command=mainPage"/>">
@@ -50,18 +59,23 @@
                         </div>
                     </form>
                 </div>
-                <div class="button">
-                    <div class="dropdown">
-                        <button class="cash">${requestScope.accountMoney} р</button>
-                        <div class="dropdown-content">
-                            <button type="submit" name="#" value="#"><a href="#popup">${top_up}</a></button>
+
+                <c:if test="${!user.admin}">
+                    <div class="button">
+                        <div class="dropdown">
+                            <button class="cash">${requestScope.accountMoney} р</button>
+                            <div class="dropdown-content">
+                                <button type="submit" name="#" value="#"><a href="#popup">${top_up}</a></button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </c:if>
+
                 <div class="button">
                     <a href="controller?command=logout"><input type="submit" class="logout" value="${btn_exit}" ></a>
                 </div>
             </div>
+            <c:remove var="user"/>
         </div>
     </div>
     <div id="popup" class="popup">
@@ -72,7 +86,7 @@
                 <div class="popup_title">${rechange_account_money}</div>
                 <div class="popup_text">
                     <form method="post" class="fillUpMoney" action="controller?command=fillUpMoney">
-                        <label for="сard">${card_number}:</label><br>
+                        <label for="card">${card_number}:</label><br>
                         <input class="shadow" id="card" type="number" name="card"/><br>
                         <label for="money">${sum}:</label><br>
                         <input class="shadow" id="money" type="number" name="money"/>

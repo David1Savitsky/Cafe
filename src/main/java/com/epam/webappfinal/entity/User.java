@@ -22,7 +22,7 @@ public class User implements Identifiable, Serializable {
     private final String login;
     private final boolean isAdmin;
     private BigDecimal amount;
-    private final Integer loyaltyPoints;
+    private Integer loyaltyPoints;
     private final boolean isBlocked;
 
     public User(Long id, String name, String surname, String login,
@@ -72,6 +72,10 @@ public class User implements Identifiable, Serializable {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public void setLoyaltyPoints(Integer loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
     }
 
     @Override

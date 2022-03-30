@@ -11,7 +11,8 @@ import javax.servlet.http.HttpSession;
 
 public class AddToShoppingCartCommand implements Command {
 
-    private static final String MAIN_PAGE_COMMAND = "controller?command=mainPage";
+    private static final String REFERER_TEXT_REPRESENTATION = "referer";
+
 
     private final OrderService orderService;
 
@@ -30,6 +31,9 @@ public class AddToShoppingCartCommand implements Command {
         orderService.addFoodToShoppingCart(foodId, user.getId());
         //session.setAttribute("is_added", "true");
 
-        return CommandResult.redirect(MAIN_PAGE_COMMAND);
+        String requestedPage = req.getHeader(REFERER_TEXT_REPRESENTATION);
+        //req.setAttribute("foodType", "drink");
+        //return CommandResult.redirect(requestedPage);
+        return CommandResult.redirect("controller?command=mainPage");
     }
 }
