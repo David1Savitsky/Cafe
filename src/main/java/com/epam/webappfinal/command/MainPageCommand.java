@@ -5,6 +5,7 @@ import com.epam.webappfinal.entity.FoodType;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.FoodService;
+import javafx.util.Pair;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ public class MainPageCommand implements Command {
     private static final String ACCOUNT_MONEY_TEXT_REPRESENTATION = "accountMoney";
     private static final String FOOD_LIST_SIZE_TEXT_REPRESENTATION = "foodListSize";
     private static final String FOOD_LIST_TEXT_REPRESENTATION = "foodList";
+    private static final String FOOD_TYPE_LIST_TEXT_REPRESENTATION = "foodTypeList";
     private static final String MAIN_PAGE = "/main.jsp";
     private static final String LOGIN_PAGE = "/login.jsp";
 
@@ -38,7 +40,10 @@ public class MainPageCommand implements Command {
                 req.setAttribute(ACCOUNT_MONEY_TEXT_REPRESENTATION, accountMoney);
             }
 
-            List<Food> foodList = foodService.getFood(FoodType.ALL);
+            List<FoodType> foodTypeList = foodService.getTypeList();
+            req.setAttribute(FOOD_TYPE_LIST_TEXT_REPRESENTATION, foodTypeList);
+
+            List<Food> foodList = foodService.getFood();
             req.setAttribute(FOOD_LIST_SIZE_TEXT_REPRESENTATION, foodList.size());
             req.setAttribute(FOOD_LIST_TEXT_REPRESENTATION, foodList);
 

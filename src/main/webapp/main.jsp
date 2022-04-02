@@ -9,8 +9,6 @@
 <fmt:setBundle basename="language"/>
 <fmt:message key="lbl_price" var="lbl_price"/>
 <fmt:message key="btn_add_to_shopping_cart" var="btn_add_to_shopping_cart"/>
-<fmt:message key="drop_meal" var="drop_meal"/>
-<fmt:message key="drop_drink" var="drop_drink"/>
 <fmt:message key="order_food" var="order_food"/>
 <fmt:message key="items_not_found" var="items_not_found"/>
 <fmt:message key="save_changes" var="save_changes"/>
@@ -31,8 +29,9 @@
 
 <div class="topnav">
     <form method="post" action="controller?command=foodChange">
-        <button type="submit" name="foodType" value="drink">${drop_drink}</button>
-        <button type="submit" name="foodType" value="meal">${drop_meal}</button>
+        <c:forEach items="${requestScope.foodTypeList}" var="type">
+            <button type="submit" name="typeName" value="${type.id}">${type.name}</button>
+        </c:forEach>
     </form>
 </div>
 
@@ -43,15 +42,15 @@
                 <div class="column side">
                     <c:choose>
                         <c:when test="${sessionScope.users.admin}">
+                            <div style="display: flex">
+                                <input class="elem" type="text" name="name" value="${food.name}">
+                                <form method="post" action="controller?command=deleteFoodItem">
+                                    <button class="remove" type="submit" name="foodId" value="${food.id}"></button>
+                                </form>
+                            </div>
                             <form method="post" action="controller?command=saveFoodItem">
-                                <div style="display: flex">
-                                    <input class="elem" type="text" name="name" value="${food.name}">
-                                    <form method="post" action="controller?command=deleteFoodItem">
-                                        <button class="remove" type="submit" name="foodId" value="${food.id}">${delete}</button>
-                                    </form>
-                                </div>
+                                <input class="elem" type="hidden" name="name" value="${food.name}">
                                 <p>${lbl_price}: <input class="elem2" type="number" name="price" value="${food.price}">р.</p>
-
                                 <button class="btn_order" type="submit" name="foodId" value="${food.id}">${save_changes}</button>
                             </form>
                         </c:when>

@@ -66,8 +66,6 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.throwing(e);
-            LOGGER.info("got it");
-            System.out.println(e);
             throw new DaoException(e);
         }
     }
@@ -90,10 +88,9 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
     }
 
     protected Optional<T> executeForSingleResult(String query, Object... params) throws DaoException {
-        List<T> items = null;
-        items = executeQuery(query, params);
-        Integer itemsSize = items.size();
-        if(itemsSize == 1) {
+        List<T> items = executeQuery(query, params);
+        int itemsSize = items.size();
+        if (itemsSize == 1) {
             return Optional.of(items.get(0));
         } else if (itemsSize > 1) {
             throw new IllegalArgumentException("More than one record found");

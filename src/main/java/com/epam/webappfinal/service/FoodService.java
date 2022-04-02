@@ -8,6 +8,12 @@ import java.util.List;
 
 public interface FoodService {
 
-    List<Food> getFood(FoodType foodType) throws ServiceException;
+    List<Food> getFood() throws ServiceException;
+
+    List<Food> getFood(Long typeId) throws ServiceException;
+
+    List<FoodType> getTypeList() throws ServiceException;
+
+    void deleteFood(Long foodId) throws ServiceException;
 
 }

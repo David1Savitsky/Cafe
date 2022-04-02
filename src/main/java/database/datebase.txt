@@ -42,3 +42,8 @@ create table orders_food(
     foreign key (order_id) references orders(id),
     foreign key (food_id) references food(id)
 );
+
+create table types(
+    id int primary key auto_increment,
+	name varchar(50) not null
+);

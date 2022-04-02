@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DaoHelper implements AutoCloseable {
 
-    private ProxyConnection connection;
+    private final ProxyConnection connection;
 
     public DaoHelper(ConnectionPool pool) {
         this.connection = pool.getConnection();
@@ -20,6 +20,10 @@ public class DaoHelper implements AutoCloseable {
 
     public FoodDao createFoodDao() {
         return new FoodDaoImpl(connection);
+    }
+
+    public FoodTypeDao createFoodTypeDao() {
+        return new FoodTypeDaoImpl(connection);
     }
 
     public OrderDao createOrderDao() {

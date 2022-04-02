@@ -23,7 +23,7 @@ public class OrdersFoodDaoImpl extends AbstractDao<OrdersFood> implements Orders
     private static final String INSERT_ORDER_FOOD_QUERY = "insert into orders_food set order_id = %d, food_id = %d, count = 1; ";
     private static final String INCREMENT_COUNT_QUERY = "update orders_food set count = count + 1 where order_id = %d and food_id = %d; ";
     private static final String DECREMENT_COUNT_QUERY = "update orders_food set count = count - 1 where order_id = %d and food_id = %d; ";
-    private static final String GET_FOOD_IN_SHOPPING_CART_QUERY = "select food.id, food.name, food.price, orders_food.count from food join orders_food on food.id = orders_food.food_id and orders_food.order_id = %d; ";
+    private static final String GET_FOOD_IN_SHOPPING_CART_QUERY = "select food.id, food.name, food.price, orders_food.count from food join orders_food on food.id = orders_food.food_id and orders_food.order_id = %d and food.is_disabled = false; ";
     private static final String DELETE_ORDER_FOOD_QUERY = "delete from orders_food where order_id = %d and food_id = %d; ";
 
     private final Connection connection;
@@ -79,18 +79,6 @@ public class OrdersFoodDaoImpl extends AbstractDao<OrdersFood> implements Orders
         }
         executeUpdate(query);
     }
-
-//    @Override
-//    public void deleteOrderFood(Long orderId, Long foodId) throws DaoException {
-//        String query = String.format(DELETE_ORDER_FOOD_QUERY, orderId, foodId);
-//        executeUpdate(query);
-//    }
-//
-//    @Override
-//    public void incrementOrderFood(Long orderId, Long foodId) throws DaoException {
-//        String query = String.format(INCREMENT_COUNT_QUERY, orderId, foodId);
-//        executeUpdate(query);
-//    }
 
     @Override
     public List<Pair<Food, Integer>> getFoodInShoppingCart(Long orderId) throws DaoException {

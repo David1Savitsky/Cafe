@@ -9,8 +9,7 @@ public interface FoodDao extends Dao<Food>{
 
     List<Food> getAllNotDisabled() throws DaoException;
 
-    List<Food> getAllNotDisabledDrinks() throws DaoException;
+    List<Food> getAllNotDisabled(Long typeId) throws DaoException;
 
-    List<Food> getAllNotDisabledMeal() throws DaoException;
-
+    void makeDisabledFoodById(Long foodId) throws DaoException;
 }
