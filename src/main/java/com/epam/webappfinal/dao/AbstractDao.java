@@ -144,15 +144,6 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
         return builder.toString();
     }
 
-
-//    public String generateInsertQuery(Map<String, Object> fields) {
-//        throw new UnsupportedOperationException();
-//    }
-//
-//    public String generateUpdateQuery(Map<String, Object> fields) {
-//        throw new UnsupportedOperationException();
-//    }
-
     protected String getTableName() {
         return tableName;
     }

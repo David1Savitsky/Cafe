@@ -46,7 +46,7 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
     }
 
     @Override
-    public Long makeOrder(Long userId) throws DaoException {
+    public Long createOrder(Long userId) throws DaoException {
         String query = String.format(INSERT_ORDER_QUERY, userId);
         executeUpdate(query);
         return getOrderIdInProcess(userId);

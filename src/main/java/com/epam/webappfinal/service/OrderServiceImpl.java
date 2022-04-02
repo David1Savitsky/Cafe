@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService{
             OrderDao orderDao = helper.createOrderDao();
             Long orderId = orderDao.getOrderIdInProcess(userId);
             if (orderId == null) {
-                orderId = orderDao.makeOrder(userId);
+                orderId = orderDao.createOrder(userId);
             }
 
             OrdersFoodDao ordersFoodDao = helper.createOrdersFoodDao();

@@ -9,7 +9,7 @@ public interface OrderDao extends Dao<Order> {
 
     Long getOrderIdInProcess(Long userId) throws DaoException;
 
-    Long makeOrder(Long userId) throws DaoException;
+    Long createOrder(Long userId) throws DaoException;
 
     void setOrder(Long orderId, LocalDateTime date, String paymentType) throws DaoException;
 }

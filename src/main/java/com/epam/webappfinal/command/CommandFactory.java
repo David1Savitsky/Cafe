@@ -23,6 +23,7 @@ public class CommandFactory {
     private static final String PAY_ORDER_COMMAND = "payOrder";
     private static final String DELETE_FOOD_ITEM_COMMAND = "deleteFoodItem";
     private static final String SAVE_FOOD_ITEM_COMMAND = "saveFoodItem";
+    private static final String ADD_FOOD_ITEM_COMMAND = "addFoodItem";
 
     public Command createCommand(String command) {
         switch (command){
@@ -57,7 +58,9 @@ public class CommandFactory {
             case DELETE_FOOD_ITEM_COMMAND:
                 return new DeleteFoodItemCommand(new FoodServiceImpl(new DaoHelperFactory()));
             case SAVE_FOOD_ITEM_COMMAND:
-                return new SaveFoodItemCommand();
+                return new SaveFoodItemCommand(new FoodServiceImpl(new DaoHelperFactory()));
+            case ADD_FOOD_ITEM_COMMAND:
+                return new AddFoodItemCommand(new FoodServiceImpl(new DaoHelperFactory()));
             default:
                 throw new IllegalArgumentException("Unknown command = " + command);
         }

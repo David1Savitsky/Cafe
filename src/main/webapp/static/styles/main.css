@@ -114,6 +114,7 @@ body {
 
 .elem {
     font-size: 1.5em;
+    width: 100%;
     color: burlywood;
     text-decoration: underline;
 }
@@ -124,6 +125,7 @@ body {
     background: url('../images/delete_img.png') 0 0 no-repeat;
     width: 14px;
     height: 13px;
+    float: right;
 }
 
 .elem1 {

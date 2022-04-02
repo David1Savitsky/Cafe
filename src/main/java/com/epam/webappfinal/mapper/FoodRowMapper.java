@@ -11,7 +11,7 @@ public class FoodRowMapper implements RowMapper<Food>{
     public Food map(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong(Food.ID);
         String name = resultSet.getString(Food.NAME);
-        Integer typeId = resultSet.getInt(Food.TYPE_ID);
+        Long typeId = resultSet.getLong(Food.TYPE_ID);
         BigDecimal price = resultSet.getBigDecimal(Food.PRICE);
         Boolean isDisabled = resultSet.getBoolean(Food.IS_DISABLED);
 

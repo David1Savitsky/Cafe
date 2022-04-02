@@ -15,11 +15,11 @@ public class Food implements Identifiable, Serializable {
 
     private final Long id;
     private final String name;
-    private final Integer typeId;
+    private final Long typeId;
     private final BigDecimal price;
     private final Boolean isDisabled;
 
-    public Food(Long id, String name, Integer typeId, BigDecimal price, Boolean isDisabled) {
+    public Food(Long id, String name, Long typeId, BigDecimal price, Boolean isDisabled) {
         this.id = id;
         this.name = name;
         this.typeId = typeId;
@@ -31,7 +31,7 @@ public class Food implements Identifiable, Serializable {
         return name;
     }
 
-    public Integer getTypeId() {
+    public Long getTypeId() {
         return typeId;
     }
 

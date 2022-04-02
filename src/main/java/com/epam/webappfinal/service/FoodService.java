@@ -4,6 +4,7 @@ import com.epam.webappfinal.entity.Food;
 import com.epam.webappfinal.entity.FoodType;
 import com.epam.webappfinal.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface FoodService {
@@ -16,4 +17,7 @@ public interface FoodService {
 
     void deleteFood(Long foodId) throws ServiceException;
 
+    void saveFood(Long id, String name, Long typeId, BigDecimal price) throws ServiceException;
+
+    void addFood(String name, String type, BigDecimal price) throws ServiceException;
 }

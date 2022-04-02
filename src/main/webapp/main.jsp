@@ -42,14 +42,15 @@
                 <div class="column side">
                     <c:choose>
                         <c:when test="${sessionScope.users.admin}">
-                            <div style="display: flex">
-                                <input class="elem" type="text" name="name" value="${food.name}">
+                            <div>
+<%--                                <input class="elem" type="text" name="name" value="${food.name}">--%>
                                 <form method="post" action="controller?command=deleteFoodItem">
                                     <button class="remove" type="submit" name="foodId" value="${food.id}"></button>
                                 </form>
                             </div>
                             <form method="post" action="controller?command=saveFoodItem">
-                                <input class="elem" type="hidden" name="name" value="${food.name}">
+                                <input class="elem" type="text" name="name" value="${food.name}">
+                                <input type="hidden" name="typeId" value="${food.typeId}">
                                 <p>${lbl_price}: <input class="elem2" type="number" name="price" value="${food.price}">р.</p>
                                 <button class="btn_order" type="submit" name="foodId" value="${food.id}">${save_changes}</button>
                             </form>
@@ -76,7 +77,7 @@
                 <p>${lbl_price}: <input class="elem2" type="number" name="price" value="0">р.</p>
                 <p>Тип блюда: <input class="elem1" type="text" name="type" value="${on_english}"></p>
 
-                <button class="btn_order" type="submit" name="foodId" value="{food.id}">${btn_add_to_menu}</button>
+                <button class="btn_order" type="submit">${btn_add_to_menu}</button>
             </form>
         </div>
     </c:if>
