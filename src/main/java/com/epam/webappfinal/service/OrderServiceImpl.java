@@ -83,7 +83,6 @@ public class OrderServiceImpl implements OrderService{
                     ordersFoodDao.operateWithOrderDao(orderId, foodId, OperationType.INCREMENT);
                     break;
                 case DECREMENT:
-
                     ordersFoodDao.operateWithOrderDao(orderId, foodId, OperationType. DECREMENT);
                     break;
                 default:
@@ -180,11 +179,25 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    public List<ImmutableTriple<Order, List<Food>, BigDecimal>> getOrdersWithFood() throws ServiceException {
+        List<ImmutableTriple<Order, List<Food>, BigDecimal>> ordersWithFood;
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            OrdersFoodDao ordersFoodDao = helper.createOrdersFoodDao();
+            ordersWithFood = ordersFoodDao.getOrdersWithFood();
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return  ordersWithFood;
+    }
+
+    @Override
     public void changeRating(Long orderId, int rating) throws ServiceException {
         try (DaoHelper helper = daoHelperFactory.create()) {
             helper.startTransaction();
             OrderDao orderDao = helper.createOrderDao();
-            orderDao.updateRating(orderId, rating);
+//            orderDao.updateRating(orderId, rating);
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -192,14 +205,15 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void placeAnOrder(Long orderId) throws ServiceException {
+    public void placeAnOrder(Long orderId, OperationType operationType) throws ServiceException {
         try (DaoHelper helper = daoHelperFactory.create()) {
             helper.startTransaction();
             OrderDao orderDao = helper.createOrderDao();
-            orderDao.updateIsTaken(orderId);
+            orderDao.updateStatus(orderId, operationType);
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
+
 }

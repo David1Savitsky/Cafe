@@ -1,6 +1,7 @@
 package com.epam.webappfinal.mapper;
 
 import com.epam.webappfinal.entity.Order;
+import com.epam.webappfinal.entity.OrderStatus;
 import com.epam.webappfinal.entity.PaymentType;
 
 import java.sql.ResultSet;
@@ -34,11 +35,10 @@ public class OrderRowMapper implements RowMapper<Order> {
         String paymentTypeUpperCaseLine = paymentTypeLowerCaseLine.toUpperCase(Locale.ROOT);
         PaymentType type = PaymentType.valueOf(paymentTypeUpperCaseLine);
 
-        Integer rating = resultSet.getInt(Order.RATING);
-        String comment = resultSet.getString(Order.COMMENT);
-        boolean isTaken = resultSet.getBoolean(Order.IS_TAKEN);
-        boolean isOrdered = resultSet.getBoolean(Order.IS_ORDERED);
+        String orderStatusLowerCaseLine = resultSet.getString(Order.ORDER_STATUS);
+        String orderStatusUpperCaseLine = orderStatusLowerCaseLine.toUpperCase(Locale.ROOT);
+        OrderStatus orderStatus = OrderStatus.valueOf(orderStatusUpperCaseLine);
 
-        return new Order(id, visitingTime, userId, type, rating, comment, isTaken, isOrdered);
+        return new Order(id, visitingTime, userId, type, orderStatus);
     }
 }

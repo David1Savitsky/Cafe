@@ -45,6 +45,13 @@ td:first-child {
     height: 68px;
 }
 
+.red-cross {
+    display: inline-block;
+    background: url('../images/red-cross.png') 0 0 no-repeat;
+    width: 70px;
+    height: 68px;
+}
+
 /*td:last-child {*/
 /*    width: 25%;*/
 /*}*/

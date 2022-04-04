@@ -13,29 +13,20 @@ public class Order implements Identifiable, Serializable {
     public static final String VISITING_TIME = "visiting_time";
     public static final String USER_ID = "user_id";
     public static final String PAYMENT_TYPE = "payment_type";
-    public static final String RATING = "rating";
-    public static final String COMMENT = "comment";
-    public static final String IS_TAKEN = "is_taken";
-    public static final String IS_ORDERED = "is_ordered";
+    public static final String ORDER_STATUS = "status";
 
     private final Long id;
     private final LocalDateTime visitingTime;
     private final Long userId;
     private final PaymentType paymentType;
-    private final Integer rating;
-    private final String comment;
-    private final boolean isTaken;
-    private final boolean isOrdered;
+    private final OrderStatus orderStatus;
 
-    public Order(Long id, LocalDateTime visitingTime, Long userId, PaymentType paymentType, Integer rating, String comment, boolean isTaken, boolean isOrdered) {
+    public Order(Long id, LocalDateTime visitingTime, Long userId, PaymentType paymentType, OrderStatus orderStatus) {
         this.id = id;
         this.visitingTime = visitingTime;
         this.userId = userId;
         this.paymentType = paymentType;
-        this.rating = rating;
-        this.comment = comment;
-        this.isTaken = isTaken;
-        this.isOrdered = isOrdered;
+        this.orderStatus = orderStatus;
     }
 
     public LocalDateTime getVisitingTime() {
@@ -60,25 +51,13 @@ public class Order implements Identifiable, Serializable {
         return paymentType;
     }
 
-    public Integer getRating() {
-        return rating;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public boolean isTaken() {
-        return isTaken;
-    }
-
-    public boolean isOrdered() {
-        return isOrdered;
-    }
-
     @Override
     public Long getId() {
         return id;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
     @Override
@@ -88,10 +67,7 @@ public class Order implements Identifiable, Serializable {
                 ", visitingTime=" + visitingTime +
                 ", userId=" + userId +
                 ", paymentType=" + paymentType +
-                ", rating=" + rating +
-                ", comment='" + comment + '\'' +
-                ", isTaken=" + isTaken +
-                ", isOrdered=" + isOrdered +
+                ", orderStatus=" + orderStatus +
                 '}';
     }
 }

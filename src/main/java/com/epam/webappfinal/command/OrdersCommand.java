@@ -5,7 +5,6 @@ import com.epam.webappfinal.entity.Order;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.OrderService;
-import javafx.util.Pair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +15,10 @@ import java.util.List;
 
 public class OrdersCommand implements Command {
 
-    private static final String ADMIN_TEXT_REPRESENTATION = "admin";
     private static final String ACCOUNT_MONEY_TEXT_REPRESENTATION = "accountMoney";
+    private static final String ORDER_LIST_SIZE_TEXT_REPRESENTATION = "orderListSize";
+    private static final String ORDER_LIST_TEXT_REPRESENTATION = "orderList";
+    private static final String ORDER_PAGE = "/orders.jsp";
 
     private final OrderService orderService;
 
@@ -30,17 +31,17 @@ public class OrdersCommand implements Command {
 
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
-        if (user != null || session.getAttribute(ADMIN_TEXT_REPRESENTATION) != null) {
-
-            if (user != null) {
-                BigDecimal accountMoney = user.getAmount();
-                req.setAttribute(ACCOUNT_MONEY_TEXT_REPRESENTATION, accountMoney);
-            }
+        List<ImmutableTriple<Order, List<Food>, BigDecimal>> orderList;
+        if (user.isAdmin()) {
+            orderList = orderService.getOrdersWithFood();
+        } else {
+            BigDecimal accountMoney = user.getAmount();
+            req.setAttribute(ACCOUNT_MONEY_TEXT_REPRESENTATION, accountMoney);
+            orderList = orderService.getOrdersWithFood(user.getId());
         }
 
-        List<ImmutableTriple<Order, List<Food>, BigDecimal>> orderList = orderService.getOrdersWithFood(user.getId());
-        req.setAttribute("orderList", orderList);
-        System.out.println(orderList);
-        return CommandResult.forward("/orders.jsp");
+        req.setAttribute(ORDER_LIST_TEXT_REPRESENTATION, orderList);
+        req.setAttribute(ORDER_LIST_SIZE_TEXT_REPRESENTATION, orderList.size());
+        return CommandResult.forward(ORDER_PAGE);
     }
 }

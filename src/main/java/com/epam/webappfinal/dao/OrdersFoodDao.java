@@ -22,5 +22,5 @@ public interface OrdersFoodDao extends Dao<OrdersFood> {
     List<Pair<Food, Integer>> getFoodInShoppingCart(Long orderId) throws DaoException;
 
     List<ImmutableTriple<Order, List<Food>, BigDecimal>> getOrdersWithFood(Long userId) throws DaoException;
-    //List<Pair<Order, List<Food>>> getFoodByOrdersId(List<Order> orders) throws DaoException;
+    List<ImmutableTriple<Order, List<Food>, BigDecimal>> getOrdersWithFood() throws DaoException;
 }

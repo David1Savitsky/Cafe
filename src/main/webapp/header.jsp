@@ -20,6 +20,7 @@
 <fmt:message key="rechange" var="rechange"/>
 <fmt:message key="sum" var="sum"/>
 <fmt:message key="lbl_orders" var="lbl_orders"/>
+<fmt:message key="lbl_main_page" var="lbl_main_page"/>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +32,9 @@
         <div class="menu_wrapper">
             <c:set var="user" value="${sessionScope.users}"/>
             <div class="menu_item">
+                <a href="<c:url value="controller?command=mainPage"/>">
+                    <input type="submit" class="logout" value="${lbl_main_page}" >
+                </a>
                 <c:choose>
                     <c:when test="${user.admin}">
                         <a href="<c:url value="controller?command=users"/>">

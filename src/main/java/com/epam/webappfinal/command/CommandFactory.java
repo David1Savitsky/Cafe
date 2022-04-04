@@ -30,6 +30,7 @@ public class CommandFactory {
     private static final String ORDERS_COMMAND = "orders";
     private static final String CHANGE_RATING_COMMAND = "changeRating";
     private static final String ORDER_IS_TAKEN_COMMAND = "orderIsTaken";
+    private static final String ORDER_IS_REJECTED_COMMAND = "orderIsRejected";
 
     public Command createCommand(String command) {
         switch (command){
@@ -79,6 +80,8 @@ public class CommandFactory {
                 return new ChangeRatingCommand(new OrderServiceImpl(new DaoHelperFactory()));
             case ORDER_IS_TAKEN_COMMAND:
                 return new OrderIsTakenCommand(new OrderServiceImpl(new DaoHelperFactory()));
+            case ORDER_IS_REJECTED_COMMAND:
+                return new OrderIsRejectedCommand(new OrderServiceImpl(new DaoHelperFactory()));
             default:
                 throw new IllegalArgumentException("Unknown command = " + command);
         }

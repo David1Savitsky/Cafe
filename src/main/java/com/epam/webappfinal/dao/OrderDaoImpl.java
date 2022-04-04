@@ -3,6 +3,7 @@ package com.epam.webappfinal.dao;
 import com.epam.webappfinal.entity.Order;
 import com.epam.webappfinal.exception.DaoException;
 import com.epam.webappfinal.mapper.OrderRowMapper;
+import com.epam.webappfinal.service.OperationType;
 
 import java.sql.Connection;
 import java.time.LocalDateTime;
@@ -12,12 +13,13 @@ import java.util.Map;
 
 public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
 
-    private static final String GET_ORDERS_IN_PROCESS_QUERY = "select * from orders where user_id = %d and is_taken = false and is_ordered = false; ";
-    private static final String GET_ORDERS_BY_USER_ID_QUERY = "select * from orders where user_id = ? and is_ordered=true order by visiting_time;";
+    private static final String GET_ORDERS_IN_PROCESS_QUERY = "select * from orders where user_id = %d and status = 'is_choosing'; ";
+    private static final String GET_ORDERS_BY_USER_ID_QUERY = "select * from orders where user_id = ? and status = 'is_ordered' order by visiting_time;";
     private static final String INSERT_ORDER_QUERY = "insert into orders set user_id = %d; ";
-    private static final String SET_ORDER = "update orders set visiting_time = ?, payment_type = ?, is_ordered = true where id = ?;";
-    private static final String UPDATE_RATING_QUERY = "update orders set rating = ? where id = ?; ";
-    private static final String IS_TAKEN_QUERY = "update orders set is_taken = true where id = ?; ";
+    private static final String SET_ORDER = "update orders set visiting_time = ?, payment_type = ?, status = 'is_ordered' where id = ?;";
+//    private static final String UPDATE_RATING_QUERY = "update orders set rating = ? where id = ?; ";
+    private static final String IS_TAKEN_QUERY = "update orders set status = 'is_taken' where id = ?; ";
+    private static final String IS_REJECTED_QUERY = "update orders set status = 'is_rejected' where id = ?; ";
 
     public OrderDaoImpl(Connection connection) {
         super(connection, new OrderRowMapper(), Order.TABLE_NAME);
@@ -30,10 +32,8 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
         fields.put(Order.VISITING_TIME, item.getVisitingTime());
         fields.put(Order.USER_ID, item.getUserId());
         fields.put(Order.PAYMENT_TYPE, item.getPaymentType());
-        fields.put(Order.RATING, item.getRating());
-        fields.put(Order.COMMENT, item.getComment());
-        fields.put(Order.IS_TAKEN, item.isTaken());
-        fields.put(Order.IS_ORDERED, item.isOrdered());
+        fields.put(Order.ORDER_STATUS, item.getOrderStatus());
+
         return fields;
     }
 
@@ -65,13 +65,23 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
         return executeQuery(GET_ORDERS_BY_USER_ID_QUERY, userId);
     }
 
-    @Override
-    public void updateRating(Long orderId, int rating) throws DaoException {
-        executeUpdate(UPDATE_RATING_QUERY, rating, orderId);
-    }
+//    @Override
+//    public void updateRating(Long orderId, int rating) throws DaoException {
+//        executeUpdate(UPDATE_RATING_QUERY, rating, orderId);
+//    }
 
     @Override
-    public void updateIsTaken(Long orderId) throws DaoException {
-        executeUpdate(IS_TAKEN_QUERY, orderId);
+    public void updateStatus(Long orderId, OperationType operationType) throws DaoException {
+        switch (operationType) {
+            case ACCEPT:
+                executeUpdate(IS_TAKEN_QUERY, orderId);
+                break;
+            case DELETE:
+                executeUpdate(IS_REJECTED_QUERY, orderId);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown operation type = " + operationType);
+        }
+
     }
 }

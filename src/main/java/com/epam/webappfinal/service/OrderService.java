@@ -27,7 +27,9 @@ public interface OrderService {
 
     List<ImmutableTriple<Order, List<Food>, BigDecimal>> getOrdersWithFood(Long userId) throws ServiceException;
 
+    List<ImmutableTriple<Order, List<Food>, BigDecimal>> getOrdersWithFood() throws ServiceException;
+
     void changeRating(Long orderId, int rating) throws ServiceException;
 
-    void placeAnOrder(Long orderId) throws ServiceException;
+    void placeAnOrder(Long orderId, OperationType operationType) throws ServiceException;
 }

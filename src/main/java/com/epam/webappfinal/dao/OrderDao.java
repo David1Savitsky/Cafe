@@ -2,6 +2,7 @@ package com.epam.webappfinal.dao;
 
 import com.epam.webappfinal.entity.Order;
 import com.epam.webappfinal.exception.DaoException;
+import com.epam.webappfinal.service.OperationType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +17,7 @@ public interface OrderDao extends Dao<Order> {
 
     List<Order> getOrdersByUserId(Long userId) throws DaoException;
 
-    void updateRating(Long orderId, int rating) throws DaoException;
+//    void updateRating(Long orderId, int rating) throws DaoException;
 
-    void updateIsTaken(Long orderId) throws DaoException;
+    void updateStatus(Long orderId, OperationType operationType) throws DaoException;
 }

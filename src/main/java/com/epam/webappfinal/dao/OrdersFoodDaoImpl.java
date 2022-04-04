@@ -28,14 +28,20 @@ public class OrdersFoodDaoImpl extends AbstractDao<OrdersFood> implements Orders
     private static final String INCREMENT_COUNT_QUERY = "update orders_food set count = count + 1 where order_id = %d and food_id = %d; ";
     private static final String DECREMENT_COUNT_QUERY = "update orders_food set count = count - 1 where order_id = %d and food_id = %d; ";
     private static final String GET_FOOD_IN_SHOPPING_CART_QUERY = "select food.id, food.name, food.price, orders_food.count from food join orders_food on food.id = orders_food.food_id and orders_food.order_id = %d and food.is_disabled = false; ";
-    private static final String GET_FOOD_BY_ORDER_ID_QUERY = "select food.name from food join orders_food on food.id = orders_food.food_id and orders_food.order_id = %d;";
     private static final String DELETE_ORDER_FOOD_QUERY = "delete from orders_food where order_id = %d and food_id = %d; ";
-    private static final String GET_ORDER_WITH_FOOD_QUERY =
+    private static final String GET_ORDERS_WITH_FOOD_QUERY =
                     "SELECT o.*, f.*\n" +
                     "from orders_food o_f INNER JOIN food f on o_f.food_id=f.id\n" +
                     "  INNER JOIN orders o on o_f.order_id=o.id\n" +
                     "  INNER JOIN users u ON o.user_id=u.id\n" +
-                    " WHERE u.id=1 and is_ordered = true and is_taken = false; ";
+                    " WHERE u.id = %d and status = 'is_ordered'; ";
+
+    private static final String GET_ALL_ORDERS_WITH_FOOD_QUERY =
+            "SELECT o.*, f.*\n" +
+                    "from orders_food o_f INNER JOIN food f on o_f.food_id=f.id\n" +
+                    "  INNER JOIN orders o on o_f.order_id=o.id\n" +
+                    "  INNER JOIN users u ON o.user_id=u.id\n" +
+                    " WHERE status = 'is_ordered' or status = 'is_taken' or status = 'is_rejected'; ";
 
     private final Connection connection;
 
@@ -117,11 +123,22 @@ public class OrdersFoodDaoImpl extends AbstractDao<OrdersFood> implements Orders
 
     @Override
     public List<ImmutableTriple<Order, List<Food>, BigDecimal>> getOrdersWithFood(Long userId) throws DaoException {
-        String query = String.format(GET_ORDER_WITH_FOOD_QUERY, userId);
+        String query = String.format(GET_ORDERS_WITH_FOOD_QUERY, userId);
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             List<ImmutableTriple<Order, List<Food>, BigDecimal>> list = extractFoodNamesFromResultSet(resultSet);
-            System.out.println(list);
+            return list;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public List<ImmutableTriple<Order, List<Food>, BigDecimal>> getOrdersWithFood() throws DaoException {
+        String query = String.format(GET_ALL_ORDERS_WITH_FOOD_QUERY);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            List<ImmutableTriple<Order, List<Food>, BigDecimal>> list = extractFoodNamesFromResultSet(resultSet);
             return list;
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -167,30 +184,4 @@ public class OrdersFoodDaoImpl extends AbstractDao<OrdersFood> implements Orders
         }
         return sum;
     }
-
-    /*public List<Pair<Order, List<Food>>> getFoodByOrdersId(List<Order> orders) throws DaoException {
-        List<Pair<Order, List<Food>>> ordersWithFood = new ArrayList<>();
-        for (Order order : orders) {
-            String query = String.format(GET_FOOD_BY_ORDER_ID_QUERY, order.getId());
-            List<Food> foodList;
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
-                ResultSet resultSet = statement.executeQuery();
-                foodList = extractFoodNamesFromResultSet(resultSet);
-            } catch (SQLException e) {
-                throw new DaoException(e);
-            }
-            ordersWithFood.add(new Pair<>(order, foodList));
-        }
-        return ordersWithFood;
-    }
-
-    private List<Food> extractFoodNamesFromResultSet(ResultSet resultSet) throws SQLException {
-        List<Food> foodList = new ArrayList<>();
-        while (resultSet.next()) {
-            String name = resultSet.getString(Food.NAME);
-            Food food = new Food(null, name, null, null, null);
-            foodList.add(food);
-        }
-        return foodList;
-    }*/
 }
