@@ -3,6 +3,7 @@ package com.epam.webappfinal.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class Order implements Identifiable, Serializable {
 
@@ -41,6 +42,16 @@ public class Order implements Identifiable, Serializable {
         return visitingTime;
     }
 
+    public String getDate() {
+        String items[] = visitingTime.toString().split("T");
+        return items[0];
+    }
+
+    public String getTime() {
+        String items[] = visitingTime.toString().split("T");
+        return items[1];
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -68,5 +79,19 @@ public class Order implements Identifiable, Serializable {
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", visitingTime=" + visitingTime +
+                ", userId=" + userId +
+                ", paymentType=" + paymentType +
+                ", rating=" + rating +
+                ", comment='" + comment + '\'' +
+                ", isTaken=" + isTaken +
+                ", isOrdered=" + isOrdered +
+                '}';
     }
 }

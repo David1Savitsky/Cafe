@@ -12,7 +12,7 @@
 <fmt:message key="order_food" var="order_food"/>
 <fmt:message key="items_not_found" var="items_not_found"/>
 <fmt:message key="save_changes" var="save_changes"/>
-<fmt:message key="food_name" var="food_name"/>
+<fmt:message key="name" var="food_name"/>
 <fmt:message key="on_english" var="on_english"/>
 <fmt:message key="btn_add_to_menu" var="btn_add_to_menu"/>
 <html>
@@ -28,6 +28,9 @@
 <c:import url="header.jsp"/>
 
 <div class="topnav">
+    <form action="controller?command=mainPage" method="post">
+        <button type="submit">all</button>
+    </form>
     <form method="post" action="controller?command=foodChange">
         <c:forEach items="${requestScope.foodTypeList}" var="type">
             <button type="submit" name="typeName" value="${type.id}">${type.name}</button>

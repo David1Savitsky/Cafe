@@ -85,6 +85,9 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public void addFood(String name, String type, BigDecimal price) throws ServiceException {
+        if (price.compareTo(new BigDecimal(0)) < 0) {
+            return;
+        }
         try (DaoHelper helper = daoHelperFactory.create()) {
             helper.startTransaction();
             FoodTypeDao foodTypeDao = helper.createFoodTypeDao();

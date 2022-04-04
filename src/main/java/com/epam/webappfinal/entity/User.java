@@ -23,7 +23,7 @@ public class User implements Identifiable, Serializable {
     private final boolean isAdmin;
     private BigDecimal amount;
     private Integer loyaltyPoints;
-    private final boolean isBlocked;
+    private boolean isBlocked;
 
     public User(Long id, String name, String surname, String login,
                 boolean isAdmin, BigDecimal amount, Integer loyaltyPoints, boolean isBlocked) {
@@ -76,6 +76,10 @@ public class User implements Identifiable, Serializable {
 
     public void setLoyaltyPoints(Integer loyaltyPoints) {
         this.loyaltyPoints = loyaltyPoints;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
     @Override

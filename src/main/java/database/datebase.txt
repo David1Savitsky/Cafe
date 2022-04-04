@@ -29,7 +29,7 @@ create table orders(
     is_ordered bool not null default 0,
     is_taken bool not null default 0,
     payment_type enum('account', 'cash') not null default 'cash',
-    rating tinyint not null default 10,
+    rating tinyint not null default 0,
     comment varchar(500),
     foreign key (user_id) references user(id)
 );

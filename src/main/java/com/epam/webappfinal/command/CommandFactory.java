@@ -24,6 +24,12 @@ public class CommandFactory {
     private static final String DELETE_FOOD_ITEM_COMMAND = "deleteFoodItem";
     private static final String SAVE_FOOD_ITEM_COMMAND = "saveFoodItem";
     private static final String ADD_FOOD_ITEM_COMMAND = "addFoodItem";
+    private static final String USERS_COMMAND = "users";
+    private static final String CHANGE_BLOCK_COMMAND = "changeBlock";
+    private static final String CHANGE_LOYALTY_POINTS_COMMAND = "changeLoyaltyPoints";
+    private static final String ORDERS_COMMAND = "orders";
+    private static final String CHANGE_RATING_COMMAND = "changeRating";
+    private static final String ORDER_IS_TAKEN_COMMAND = "orderIsTaken";
 
     public Command createCommand(String command) {
         switch (command){
@@ -61,6 +67,18 @@ public class CommandFactory {
                 return new SaveFoodItemCommand(new FoodServiceImpl(new DaoHelperFactory()));
             case ADD_FOOD_ITEM_COMMAND:
                 return new AddFoodItemCommand(new FoodServiceImpl(new DaoHelperFactory()));
+            case USERS_COMMAND:
+                return new UsersCommand(new UserServiceImpl(new DaoHelperFactory()));
+            case CHANGE_BLOCK_COMMAND:
+                return new ChangeBlockCommand(new UserServiceImpl(new DaoHelperFactory()));
+            case CHANGE_LOYALTY_POINTS_COMMAND:
+                return new ChangeLoyaltyPointsCommand(new UserServiceImpl(new DaoHelperFactory()));
+            case ORDERS_COMMAND:
+                return new OrdersCommand(new OrderServiceImpl(new DaoHelperFactory()));
+            case CHANGE_RATING_COMMAND:
+                return new ChangeRatingCommand(new OrderServiceImpl(new DaoHelperFactory()));
+            case ORDER_IS_TAKEN_COMMAND:
+                return new OrderIsTakenCommand(new OrderServiceImpl(new DaoHelperFactory()));
             default:
                 throw new IllegalArgumentException("Unknown command = " + command);
         }

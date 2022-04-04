@@ -30,7 +30,6 @@ public class PayOrderCommand implements Command {
         User user = (User) session.getAttribute(User.TABLE_NAME);
 
         String dateStr = req.getParameter("date");
-        //LocalDateTime dateTime = LocalDateTime.parse(dateStr);
 
         String paymentTypeStr = req.getParameter("type");
         PaymentType paymentType = PaymentType.valueOf(paymentTypeStr.toUpperCase(Locale.ROOT));

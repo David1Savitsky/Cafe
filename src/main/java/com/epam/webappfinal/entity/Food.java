@@ -13,7 +13,7 @@ public class Food implements Identifiable, Serializable {
     public static final String PRICE = "price";
     public static final String IS_DISABLED = "is_disabled";
 
-    private final Long id;
+    private Long id;
     private final String name;
     private final Long typeId;
     private final BigDecimal price;
@@ -46,6 +46,10 @@ public class Food implements Identifiable, Serializable {
     @Override
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

@@ -13,8 +13,11 @@ import java.util.Map;
 public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
 
     private static final String GET_ORDERS_IN_PROCESS_QUERY = "select * from orders where user_id = %d and is_taken = false and is_ordered = false; ";
+    private static final String GET_ORDERS_BY_USER_ID_QUERY = "select * from orders where user_id = ? and is_ordered=true order by visiting_time;";
     private static final String INSERT_ORDER_QUERY = "insert into orders set user_id = %d; ";
     private static final String SET_ORDER = "update orders set visiting_time = ?, payment_type = ?, is_ordered = true where id = ?;";
+    private static final String UPDATE_RATING_QUERY = "update orders set rating = ? where id = ?; ";
+    private static final String IS_TAKEN_QUERY = "update orders set is_taken = true where id = ?; ";
 
     public OrderDaoImpl(Connection connection) {
         super(connection, new OrderRowMapper(), Order.TABLE_NAME);
@@ -55,5 +58,20 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
     @Override
     public void setOrder(Long orderId, LocalDateTime date, String paymentType) throws DaoException {
         executeUpdate(SET_ORDER, date, paymentType, orderId);
+    }
+
+    @Override
+    public List<Order> getOrdersByUserId(Long userId) throws DaoException {
+        return executeQuery(GET_ORDERS_BY_USER_ID_QUERY, userId);
+    }
+
+    @Override
+    public void updateRating(Long orderId, int rating) throws DaoException {
+        executeUpdate(UPDATE_RATING_QUERY, rating, orderId);
+    }
+
+    @Override
+    public void updateIsTaken(Long orderId) throws DaoException {
+        executeUpdate(IS_TAKEN_QUERY, orderId);
     }
 }

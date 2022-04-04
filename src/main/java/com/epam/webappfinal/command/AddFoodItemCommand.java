@@ -23,9 +23,9 @@ public class AddFoodItemCommand implements Command {
         String name = req.getParameter("name");
         String type = req.getParameter("type").toLowerCase(Locale.ROOT);
         BigDecimal price = new BigDecimal(req.getParameter("price"));
-        if (price.compareTo(new BigDecimal(0)) >= 0) {
+        //if (price.compareTo(new BigDecimal(0)) >= 0) {
             foodService.addFood(name, type, price);
-        }
+        //}
         return CommandResult.redirect(MAIN_PAGE_COMMAND);
     }
 }

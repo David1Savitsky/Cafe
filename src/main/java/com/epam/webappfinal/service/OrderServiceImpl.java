@@ -2,6 +2,7 @@ package com.epam.webappfinal.service;
 
 import com.epam.webappfinal.dao.*;
 import com.epam.webappfinal.entity.Food;
+import com.epam.webappfinal.entity.Order;
 import com.epam.webappfinal.entity.PaymentType;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.DaoException;
@@ -13,11 +14,12 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 public class OrderServiceImpl implements OrderService{
 
     private static final Double DISCOUNT_FACTOR = 0.001;
-    public static final int MAX_POINTS_NUMBER = 100;
+    private static final int MAX_POINTS_NUMBER = 100;
 
     private final DaoHelperFactory daoHelperFactory;
 
@@ -103,7 +105,6 @@ public class OrderServiceImpl implements OrderService{
             Long orderId = orderDao.getOrderIdInProcess(userId);
             OrdersFoodDao ordersFoodDao = helper.createOrdersFoodDao();
             foodList = ordersFoodDao.getFoodInShoppingCart(orderId);
-
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -134,7 +135,6 @@ public class OrderServiceImpl implements OrderService{
         }
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime date = LocalDateTime.parse(dateStr);
-        int flag = date.compareTo(now);
         if ((date.compareTo(now) <= 0) || (user.getAmount().compareTo(totalAmount) == -1)) {
             return false;
         }
@@ -163,5 +163,43 @@ public class OrderServiceImpl implements OrderService{
         }
 
         return true;
+    }
+
+    @Override
+    public List<ImmutableTriple<Order, List<Food>, BigDecimal>> getOrdersWithFood(Long userId) throws ServiceException {
+        List<ImmutableTriple<Order, List<Food>, BigDecimal>> ordersWithFood;
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            OrdersFoodDao ordersFoodDao = helper.createOrdersFoodDao();
+            ordersWithFood = ordersFoodDao.getOrdersWithFood(userId);
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return  ordersWithFood;
+    }
+
+    @Override
+    public void changeRating(Long orderId, int rating) throws ServiceException {
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            OrderDao orderDao = helper.createOrderDao();
+            orderDao.updateRating(orderId, rating);
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void placeAnOrder(Long orderId) throws ServiceException {
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            OrderDao orderDao = helper.createOrderDao();
+            orderDao.updateIsTaken(orderId);
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 }

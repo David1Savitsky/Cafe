@@ -1,0 +1,91 @@
+body{
+    background: url('../images/background3.jpg') 50% 50%/cover no-repeat fixed;
+    font-size: 16px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.container{
+    margin-left: 10%;
+    margin-top: 3%;
+    width: 80%;
+    overflow: hidden;
+    border: 1px solid #C5C5C5;
+    background: #fff;
+}
+
+.title {
+    color: gray;
+    margin: 10px 10px 0 10px;
+}
+
+table {
+    border-collapse: collapse;
+
+    width: 98%;
+    text-align: center;
+    margin: 10px;
+}
+
+td div p {
+    padding: 10px;
+}
+
+th, td{
+    border-bottom: 0.1px solid black;
+}
+
+td:first-child {
+    width: 15%;
+}
+
+.check-mark {
+    display: inline-block;
+    background: url('../images/check-mark.png') 0 0 no-repeat;
+    width: 70px;
+    height: 68px;
+}
+
+/*td:last-child {*/
+/*    width: 25%;*/
+/*}*/
+
+/*.rating-area {*/
+/*    overflow: hidden;*/
+/*    width: 265px;*/
+/*    margin: 0 auto;*/
+/*}*/
+/*.rating-area:not(:checked) > input {*/
+/*    display: none;*/
+/*}*/
+/*.rating-area:not(:checked) > label {*/
+/*    float: right;*/
+/*    width: 42px;*/
+/*    padding: 0;*/
+/*    cursor: pointer;*/
+/*    font-size: 32px;*/
+/*    line-height: 32px;*/
+/*    color: lightgrey;*/
+/*    text-shadow: 1px 1px #bbb;*/
+/*}*/
+/*.rating-area:not(:checked) > label:before {*/
+/*    content: '★';*/
+/*}*/
+/*.rating-area > input:checked ~ label {*/
+/*    color: gold;*/
+/*    text-shadow: 1px 1px #c60;*/
+/*}*/
+/*.rating-area:not(:checked) > label:hover,*/
+/*.rating-area:not(:checked) > label:hover ~ label {*/
+/*    color: gold;*/
+/*}*/
+/*.rating-area > input:checked + label:hover,*/
+/*.rating-area > input:checked + label:hover ~ label,*/
+/*.rating-area > input:checked ~ label:hover,*/
+/*.rating-area > input:checked ~ label:hover ~ label,*/
+/*.rating-area > label:hover ~ input:checked ~ label {*/
+/*    color: gold;*/
+/*    text-shadow: 1px 1px goldenrod;*/
+/*}*/
+/*.rate-area > label:active {*/
+/*    position: relative;*/
+/*}*/

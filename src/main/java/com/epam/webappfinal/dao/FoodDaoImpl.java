@@ -13,7 +13,6 @@ public class FoodDaoImpl extends AbstractDao<Food> implements FoodDao{
 
     private static final String GET_ALL_NOT_DISABLED_QUERY = "SELECT * FROM %s WHERE is_disabled = false ; ";
     private static final String GET_TYPE_NOT_DISABLED_QUERY = "select * from %s where type_id = %d and is_disabled = false; ";
-    private static final String GET_MEAL_TYPE_NOT_DISABLED_QUERY = "select * from %s where type = \"meal\" and is_disabled = false; ";
     private static final String UPDATE_FOOD_NOT_DISABLED_QUERY = "update food set is_disabled = true where id = ?; ";
 
     public FoodDaoImpl(Connection connection) {

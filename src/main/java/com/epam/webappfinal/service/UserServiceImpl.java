@@ -1,5 +1,6 @@
 package com.epam.webappfinal.service;
 
+import com.epam.webappfinal.dao.Dao;
 import com.epam.webappfinal.dao.DaoHelper;
 import com.epam.webappfinal.dao.DaoHelperFactory;
 import com.epam.webappfinal.dao.UserDao;
@@ -8,11 +9,14 @@ import com.epam.webappfinal.exception.DaoException;
 import com.epam.webappfinal.exception.ServiceException;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
     private static final Integer cardNumberLength = 16;
+    private static final Integer minLoyaltyPointNumber = 0;
+    private static final Integer maxLoyaltyPointNumber = 100;
 
     private DaoHelperFactory daoHelperFactory;
 
@@ -63,6 +67,49 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         return true;
+    }
+
+    @Override
+    public List<User> getUsers() throws ServiceException {
+        List<User> userList;
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            UserDao userDao = helper.createUserDao();
+            userList = userDao.getUsers();
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return userList;
+    }
+
+    @Override
+    public void changeBlock(Long id) throws ServiceException {
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            UserDao userDao = helper.createUserDao();
+            User user = userDao.getById(id).get();
+            user.setBlocked(!user.isBlocked());
+            userDao.save(user);
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void changeLoyaltyPoints(Long id, Integer loyaltyPoints) throws ServiceException {
+        if (loyaltyPoints < minLoyaltyPointNumber || loyaltyPoints > maxLoyaltyPointNumber) {
+            return;
+        }
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            UserDao userDao = helper.createUserDao();
+            userDao.changeLoyaltyPoints(id, loyaltyPoints);
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
 }

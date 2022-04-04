@@ -17,4 +17,6 @@ public class FoodRowMapper implements RowMapper<Food>{
 
         return new Food(id, name, typeId, price, isDisabled);
     }
+
+
 }

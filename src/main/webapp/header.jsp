@@ -33,13 +33,17 @@
             <div class="menu_item">
                 <c:choose>
                     <c:when test="${user.admin}">
-                        <a href="#"><input type="submit" class="logout" value="${lbl_users}" ></a>
+                        <a href="<c:url value="controller?command=users"/>">
+                            <input type="submit" class="logout" value="${lbl_users}">
+                        </a>
                     </c:when>
                     <c:otherwise>
                         <a href="controller?command=shoppingCart"><input type="submit" class="logout" value="${lbl_shop_cart}" ></a>
                     </c:otherwise>
                 </c:choose>
-                <a href="#"><input type="submit" class="logout" value="${lbl_orders}" ></a>
+                <a href="<c:url value="controller?command=orders"/>">
+                    <input type="submit" class="logout" value="${lbl_orders}" >
+                </a>
             </div>
             <div class="menu_item">
                 <a href="<c:url value="controller?command=mainPage"/>">

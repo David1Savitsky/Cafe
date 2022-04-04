@@ -1,10 +1,12 @@
 package com.epam.webappfinal.service;
 
 import com.epam.webappfinal.entity.Food;
+import com.epam.webappfinal.entity.Order;
 import com.epam.webappfinal.entity.PaymentType;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,4 +25,9 @@ public interface OrderService {
 
     boolean payOrder(User user, BigDecimal totalAmount, String dateStr, PaymentType paymentType) throws ServiceException;
 
+    List<ImmutableTriple<Order, List<Food>, BigDecimal>> getOrdersWithFood(Long userId) throws ServiceException;
+
+    void changeRating(Long orderId, int rating) throws ServiceException;
+
+    void placeAnOrder(Long orderId) throws ServiceException;
 }
