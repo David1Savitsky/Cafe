@@ -17,7 +17,5 @@ public interface OrderDao extends Dao<Order> {
 
     List<Order> getOrdersByUserId(Long userId) throws DaoException;
 
-//    void updateRating(Long orderId, int rating) throws DaoException;
-
     void updateStatus(Long orderId, OperationType operationType) throws DaoException;
 }

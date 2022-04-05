@@ -1,0 +1,198 @@
+body{
+    background: url('../images/background3.jpg') 50% 50%/cover no-repeat fixed;
+    font-size: 16px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.container1{
+    margin-left: 20%;
+    margin-top: 3%;
+    width: 60%;
+    overflow: hidden;
+    border: 1px solid #C5C5C5;
+    background: #fff;
+}
+
+.wrapper {
+
+}
+
+.wrapper h1 {
+    color: #FB9721;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    color: gray;
+    margin: 10px 10px 0 10px;
+}
+
+.comments_stars {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-left: 10%;
+}
+
+.stars {
+    display: flex;
+    align-items: center;
+
+}
+
+.your_comment {
+
+}
+
+textarea {
+    border-style: inset;
+    border-width: 2px;
+    font-size: 16px;
+}
+
+.remove{
+    display: inline-block;
+    text-indent: -999999px;
+    background: url('../images/delete_img.png') 0 0 no-repeat;
+    width: 14px;
+    height: 13px;
+    float: right;
+}
+
+.rating-area {
+    overflow: hidden;
+    width: 265px;
+    margin: 0 auto;
+}
+.rating-area:not(:checked) > input {
+    display: none;
+}
+.rating-area:not(:checked) > label {
+    float: right;
+    width: 42px;
+    padding: 0;
+    cursor: pointer;
+    font-size: 50px;
+    line-height: 32px;
+    color: lightgrey;
+    text-shadow: 1px 1px #bbb;
+}
+.rating-area:not(:checked) > label:before {
+    content: '★';
+}
+.rating-area > input:checked ~ label {
+    color: gold;
+    text-shadow: 1px 1px #c60;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+    color: gold;
+    text-shadow: 1px 1px goldenrod;
+}
+.rate-area > label:active {
+    position: relative;
+}
+
+.your_comment .button{
+    float: right;
+    margin-right: 5%;
+    padding: 0 45px;
+    cursor: pointer;
+    background: rgb(83, 252, 41);
+    height: 35px;
+    line-height: 33px;
+    width: auto;
+    padding: 0 20px;
+    color: #F4F4F4;
+    font: bold 14px/35px 'Ubuntu',"Myriad Pro",sans-serif;
+    border: 1px solid #DFDDDD;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 0 #500;
+    transition: .3s ease;
+}
+
+.button:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25),  0 10px 10px rgba(0,0,0,0.22);
+    color: #222222;
+}
+
+span a{
+    padding-left: 25px;
+}
+
+#comments{
+    width: 660px;
+    padding:20px;
+}
+#comments img{
+    box-shadow: 2px 2px 10px -1px;
+    -moz-box-shadow: 2px 2px 10px -1px;
+    -webkit-box-shadow: 2px 2px 10px -1px;
+    width: 84px;
+    float: left;
+}
+
+.level1 {
+    min-height: 100px;
+    margin-bottom: 5px;
+}
+
+.post1{
+    min-height: 100px;
+    width: 555px;
+    padding-top: 7px;
+    padding-left: 20px;
+}
+
+
+.comments_wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container {
+    border: 2px solid #ccc;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 16px;
+    margin: 16px 0;
+    width: 50%;
+}
+
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.container span {
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+@media (max-width: 500px) {
+    .container {
+        text-align: center;
+    }
+    .container img {
+        margin: auto;
+        float: none;
+        display: block;
+    }
+}

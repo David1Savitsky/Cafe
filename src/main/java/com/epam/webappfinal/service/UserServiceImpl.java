@@ -14,9 +14,10 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
-    private static final Integer cardNumberLength = 16;
-    private static final Integer minLoyaltyPointNumber = 0;
-    private static final Integer maxLoyaltyPointNumber = 100;
+    private static final Integer CARD_NUMBER_LENGTH = 16;
+    private static final Integer MIN_LOYALTY_POINTS_NUMBER = 0;
+    private static final Integer MAX_LOYALTY_POINTS_NUMBER = 100;
+    private static final int FINED_LOYALTY_POINTS = 10;
 
     private DaoHelperFactory daoHelperFactory;
 
@@ -45,11 +46,11 @@ public class UserServiceImpl implements UserService {
 
         try {
             moneyInt = Integer.parseInt(money);
-            if (card.length() != cardNumberLength) {
+            if (card.length() != CARD_NUMBER_LENGTH) {
                 return false;
             }
-            cardIntFirstPart = Integer.parseInt(card.substring(0, cardNumberLength / 2 - 1));
-            cardIntSecondPart = Integer.parseInt(card.substring(cardNumberLength / 2), cardNumberLength - 1);
+            cardIntFirstPart = Integer.parseInt(card.substring(0, CARD_NUMBER_LENGTH / 2 - 1));
+            cardIntSecondPart = Integer.parseInt(card.substring(CARD_NUMBER_LENGTH / 2), CARD_NUMBER_LENGTH - 1);
         } catch (NumberFormatException e) {
             return false;
         }
@@ -99,13 +100,53 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changeLoyaltyPoints(Long id, Integer loyaltyPoints) throws ServiceException {
-        if (loyaltyPoints < minLoyaltyPointNumber || loyaltyPoints > maxLoyaltyPointNumber) {
+        if (loyaltyPoints < MIN_LOYALTY_POINTS_NUMBER || loyaltyPoints > MAX_LOYALTY_POINTS_NUMBER) {
             return;
         }
         try (DaoHelper helper = daoHelperFactory.create()) {
             helper.startTransaction();
             UserDao userDao = helper.createUserDao();
             userDao.changeLoyaltyPoints(id, loyaltyPoints);
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void fineUser(Long userId) throws ServiceException {
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            UserDao userDao = helper.createUserDao();
+            User user = userDao.getById(userId).get();
+            int loyaltyPoints = user.getLoyaltyPoints();
+            if ((loyaltyPoints - FINED_LOYALTY_POINTS) < 0) {
+                user.setBlocked(true);
+                user.setLoyaltyPoints(MIN_LOYALTY_POINTS_NUMBER);
+            } else {
+                user.setLoyaltyPoints(loyaltyPoints - FINED_LOYALTY_POINTS);
+            }
+            userDao.save(user);
+
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+
+    }
+
+    @Override
+    public void rewardUser(Long id, int loyaltyPoints) throws ServiceException {
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            UserDao userDao = helper.createUserDao();
+            User user = userDao.getById(id).get();
+            if (user.getLoyaltyPoints() + loyaltyPoints > MAX_LOYALTY_POINTS_NUMBER) {
+                user.setLoyaltyPoints(MAX_LOYALTY_POINTS_NUMBER);
+            } else {
+                user.setLoyaltyPoints(user.getLoyaltyPoints() + loyaltyPoints);
+            }
+            userDao.save(user);
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);

@@ -92,9 +92,12 @@
                                                 <c:otherwise>
                                                     <div style="display: flex; justify-content: space-evenly;">
                                                         <form action="controller?command=orderIsTaken" method="post">
+                                                            <input type="hidden" name="totalAmount" value="${order.right}">
+                                                            <input type="hidden" name="userId" value="${order.left.userId}">
                                                             <button class="check-mark" type="submit" name="orderId" value="${order.left.id}"></button>
                                                         </form>
                                                         <form action="controller?command=orderIsRejected" method="post">
+                                                            <input type="hidden" name="userId" value="${order.left.userId}">
                                                             <button class="red-cross" type="submit" name="orderId" value="${order.left.id}"></button>
                                                         </form>
                                                     </div>

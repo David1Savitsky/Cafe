@@ -46,7 +46,6 @@
                     <c:choose>
                         <c:when test="${sessionScope.users.admin}">
                             <div>
-<%--                                <input class="elem" type="text" name="name" value="${food.name}">--%>
                                 <form method="post" action="controller?command=deleteFoodItem">
                                     <button class="remove" type="submit" name="foodId" value="${food.id}"></button>
                                 </form>
@@ -56,14 +55,25 @@
                                 <input type="hidden" name="typeId" value="${food.typeId}">
                                 <p>${lbl_price}: <input class="elem2" type="number" name="price" value="${food.price}">р.</p>
                                 <button class="btn_order" type="submit" name="foodId" value="${food.id}">${save_changes}</button>
+                                <br>
                             </form>
+                            <form action="controller?command=rating" method="post">
+                                <button class="star" type="submit" name="foodId" value="${food.id}">★★★★★</button>
+                            </form>
+
                         </c:when>
                         <c:otherwise>
                             <h2>${food.name}</h2>
+
                             <p>${lbl_price}: ${food.price} р.</p>
                             <form method="post" action="controller?command=addToShoppingCart">
                                 <button class="btn_order" type="submit" name="foodId" value="${food.id}">${btn_add_to_shopping_cart}</button>
+                                <br>
                             </form>
+                            <form action="controller?command=rating" method="post">
+                                <button class="star" type="submit" name="foodId" value="${food.id}">★★★★★</button>
+                            </form>
+
                         </c:otherwise>
                     </c:choose>
                 </div>

@@ -139,6 +139,18 @@ body {
     text-decoration: underline;
 }
 
+.elem3 {
+    font-size: 1.5em;
+    width: 100%;
+    color: burlywood;
+    font-weight: 900;
+}
+
+.elem3:hover {
+    cursor: pointer;
+    color: #0D0101;
+}
+
 .col{
 
 }
@@ -152,6 +164,14 @@ body {
 
 .col4 .q{
     padding-bottom: 5px;
+}
+
+.star {
+    cursor: pointer;
+    color: #E7B500;
+    background-color: white;
+    font-size: 22px;
+
 }
 
 /*.order-add {*/

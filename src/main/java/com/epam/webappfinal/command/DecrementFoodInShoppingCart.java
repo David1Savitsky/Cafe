@@ -2,7 +2,6 @@ package com.epam.webappfinal.command;
 
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
-import com.epam.webappfinal.service.OperationType;
 import com.epam.webappfinal.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;

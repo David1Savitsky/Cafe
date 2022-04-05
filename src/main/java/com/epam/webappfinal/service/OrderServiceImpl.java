@@ -19,7 +19,6 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 public class OrderServiceImpl implements OrderService{
 
     private static final Double DISCOUNT_FACTOR = 0.001;
-    private static final int MAX_POINTS_NUMBER = 100;
 
     private final DaoHelperFactory daoHelperFactory;
 
@@ -143,13 +142,13 @@ public class OrderServiceImpl implements OrderService{
             if (paymentType.equals(PaymentType.ACCOUNT)) {
                 user.setAmount(user.getAmount().subtract(totalAmount));
             }
-            int loyaltyPoints = user.getLoyaltyPoints();
-            Integer totalAmountInt = Integer.valueOf(totalAmount.intValue());
-            if ((loyaltyPoints + totalAmountInt) >= MAX_POINTS_NUMBER) {
-                user.setLoyaltyPoints(MAX_POINTS_NUMBER);
-            } else {
-                user.setLoyaltyPoints(loyaltyPoints + totalAmountInt);
-            }
+//            int loyaltyPoints = user.getLoyaltyPoints();
+//            Integer totalAmountInt = Integer.valueOf(totalAmount.intValue());
+//            if ((loyaltyPoints + totalAmountInt) >= MAX_POINTS_NUMBER) {
+//                user.setLoyaltyPoints(MAX_POINTS_NUMBER);
+//            } else {
+//                user.setLoyaltyPoints(loyaltyPoints + totalAmountInt);
+//            }
             UserDao userDao = helper.createUserDao();
             userDao.save(user);
 
@@ -190,18 +189,6 @@ public class OrderServiceImpl implements OrderService{
             throw new ServiceException(e);
         }
         return  ordersWithFood;
-    }
-
-    @Override
-    public void changeRating(Long orderId, int rating) throws ServiceException {
-        try (DaoHelper helper = daoHelperFactory.create()) {
-            helper.startTransaction();
-            OrderDao orderDao = helper.createOrderDao();
-//            orderDao.updateRating(orderId, rating);
-            helper.endTransaction();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
     }
 
     @Override

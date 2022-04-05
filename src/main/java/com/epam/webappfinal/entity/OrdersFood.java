@@ -1,6 +1,8 @@
 package com.epam.webappfinal.entity;
 
-public class OrdersFood implements Identifiable{
+import java.io.Serializable;
+
+public class OrdersFood implements Identifiable, Serializable {
 
     public static final String TABLE_NAME = "orders_food";
 

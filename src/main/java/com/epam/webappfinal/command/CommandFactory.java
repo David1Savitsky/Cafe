@@ -31,6 +31,9 @@ public class CommandFactory {
     private static final String CHANGE_RATING_COMMAND = "changeRating";
     private static final String ORDER_IS_TAKEN_COMMAND = "orderIsTaken";
     private static final String ORDER_IS_REJECTED_COMMAND = "orderIsRejected";
+    private static final String RATING_COMMAND = "rating";
+    private static final String ADD_COMMENT_COMMAND = "addComment";
+    private static final String DELETE_COMMENT_ITEM_COMMAND = "deleteCommentItem";
 
     public Command createCommand(String command) {
         switch (command){
@@ -77,11 +80,17 @@ public class CommandFactory {
             case ORDERS_COMMAND:
                 return new OrdersCommand(new OrderServiceImpl(new DaoHelperFactory()));
             case CHANGE_RATING_COMMAND:
-                return new ChangeRatingCommand(new OrderServiceImpl(new DaoHelperFactory()));
+                return new ChangeRatingCommand(new FoodServiceImpl(new DaoHelperFactory()));
             case ORDER_IS_TAKEN_COMMAND:
-                return new OrderIsTakenCommand(new OrderServiceImpl(new DaoHelperFactory()));
+                return new OrderIsTakenCommand(new OrderServiceImpl(new DaoHelperFactory()), new UserServiceImpl(new DaoHelperFactory()));
             case ORDER_IS_REJECTED_COMMAND:
-                return new OrderIsRejectedCommand(new OrderServiceImpl(new DaoHelperFactory()));
+                return new OrderIsRejectedCommand(new OrderServiceImpl(new DaoHelperFactory()), new UserServiceImpl(new DaoHelperFactory()));
+            case RATING_COMMAND:
+                return new RatingCommand(new FoodServiceImpl(new DaoHelperFactory()));
+            case ADD_COMMENT_COMMAND:
+                return new AddCommentCommand(new FoodServiceImpl(new DaoHelperFactory()));
+            case DELETE_COMMENT_ITEM_COMMAND:
+                return new DeleteCommentItemCommand(new FoodServiceImpl(new DaoHelperFactory()));
             default:
                 throw new IllegalArgumentException("Unknown command = " + command);
         }

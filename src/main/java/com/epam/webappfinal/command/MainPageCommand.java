@@ -5,7 +5,6 @@ import com.epam.webappfinal.entity.FoodType;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.FoodService;
-import javafx.util.Pair;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

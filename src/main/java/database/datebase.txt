@@ -8,7 +8,7 @@ create table users(
     surname varchar(50) not null,
     login varchar(50) not null,
     password varchar(32) not null,
-    is_admin bool not null,
+    is_admin bool not null default 0,
     amount decimal(10,2) not null default 0,
     loyalty_points int not null,
     is_blocked bool not null default 0
@@ -45,4 +45,22 @@ create table orders_food(
 create table types(
     id int primary key auto_increment,
 	name varchar(50) not null
+);
+
+create table food_comments(
+    id int primary key auto_increment,
+	user_id int not null,
+    food_id int not null,
+    comment varchar(500),
+    foreign key (user_id) references users(id),
+    foreign key (food_id) references food(id)
+);
+
+create table food_rating(
+    id int primary key auto_increment,
+	user_id int not null,
+    food_id int not null,
+    rating tinyint not null default 0,
+    foreign key (user_id) references users(id),
+    foreign key (food_id) references food(id)
 );

@@ -17,4 +17,8 @@ public interface UserService {
     void changeBlock(Long id) throws ServiceException;
 
     void changeLoyaltyPoints(Long id, Integer loyaltyPoints) throws ServiceException;
+
+    void fineUser(Long userId) throws ServiceException;
+
+    void rewardUser(Long id, int loyaltyPoints) throws ServiceException;
 }

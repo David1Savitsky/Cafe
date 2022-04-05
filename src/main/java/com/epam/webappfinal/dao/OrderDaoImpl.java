@@ -17,7 +17,6 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
     private static final String GET_ORDERS_BY_USER_ID_QUERY = "select * from orders where user_id = ? and status = 'is_ordered' order by visiting_time;";
     private static final String INSERT_ORDER_QUERY = "insert into orders set user_id = %d; ";
     private static final String SET_ORDER = "update orders set visiting_time = ?, payment_type = ?, status = 'is_ordered' where id = ?;";
-//    private static final String UPDATE_RATING_QUERY = "update orders set rating = ? where id = ?; ";
     private static final String IS_TAKEN_QUERY = "update orders set status = 'is_taken' where id = ?; ";
     private static final String IS_REJECTED_QUERY = "update orders set status = 'is_rejected' where id = ?; ";
 
@@ -64,11 +63,6 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao{
     public List<Order> getOrdersByUserId(Long userId) throws DaoException {
         return executeQuery(GET_ORDERS_BY_USER_ID_QUERY, userId);
     }
-
-//    @Override
-//    public void updateRating(Long orderId, int rating) throws DaoException {
-//        executeUpdate(UPDATE_RATING_QUERY, rating, orderId);
-//    }
 
     @Override
     public void updateStatus(Long orderId, OperationType operationType) throws DaoException {

@@ -12,4 +12,6 @@ public interface FoodDao extends Dao<Food>{
     List<Food> getAllNotDisabled(Long typeId) throws DaoException;
 
     void makeDisabledFoodById(Long foodId) throws DaoException;
+
+    void updateRating(Long orderId, Long userId, int rating) throws DaoException;
 }

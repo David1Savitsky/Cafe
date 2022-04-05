@@ -1,31 +1,35 @@
 package com.epam.webappfinal.command;
 
+import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
-import com.epam.webappfinal.service.OrderService;
+import com.epam.webappfinal.service.FoodService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ChangeRatingCommand implements Command {
 
     private static final String RATING_TEXT_REPRESENTATION = "rating";
-    private static final String ORDER_ID_TEXT_REPRESENTATION = "orderId";
-    private static final String ORDERS_PAGE_COMMAND = "controller?command=orders";
+    private static final String FOOD_ID_TEXT_REPRESENTATION = "foodId";
+    private static final String RATING_PAGE_COMMAND = "controller?command=rating";
 
-    private final OrderService orderService;
+    private final FoodService foodService;
 
-    public ChangeRatingCommand(OrderService orderService) {
-        this.orderService = orderService;
+    public ChangeRatingCommand(FoodService foodService) {
+        this.foodService = foodService;
     }
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        String orderIdStr = req.getParameter(ORDER_ID_TEXT_REPRESENTATION);
-        Long orderId = Long.parseLong(orderIdStr);
+        String foodIdStr = req.getParameter(FOOD_ID_TEXT_REPRESENTATION);
+        Long foodId = Long.parseLong(foodIdStr);
         String ratingStr = req.getParameter(RATING_TEXT_REPRESENTATION);
         int rating = Integer.parseInt(ratingStr);
-        orderService.changeRating(orderId, rating);
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(User.TABLE_NAME);
+        foodService.changeRating(foodId, user.getId(), rating);
 
-        return CommandResult.redirect(ORDERS_PAGE_COMMAND);
+        return CommandResult.redirect(RATING_PAGE_COMMAND);
     }
 }

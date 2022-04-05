@@ -14,6 +14,7 @@ public class FoodDaoImpl extends AbstractDao<Food> implements FoodDao{
     private static final String GET_ALL_NOT_DISABLED_QUERY = "SELECT * FROM %s WHERE is_disabled = false ; ";
     private static final String GET_TYPE_NOT_DISABLED_QUERY = "select * from %s where type_id = %d and is_disabled = false; ";
     private static final String UPDATE_FOOD_NOT_DISABLED_QUERY = "update food set is_disabled = true where id = ?; ";
+    private static final String UPDATE_RATING_QUERY = "update ratings set rating = ? where food_id = ? and user_id = ?; ";
 
     public FoodDaoImpl(Connection connection) {
         super(connection, new FoodRowMapper(), Food.TABLE_NAME);
@@ -45,5 +46,10 @@ public class FoodDaoImpl extends AbstractDao<Food> implements FoodDao{
     @Override
     public void makeDisabledFoodById(Long foodId) throws DaoException {
         executeUpdate(UPDATE_FOOD_NOT_DISABLED_QUERY, foodId);
+    }
+
+    @Override
+    public void updateRating(Long foodId, Long userId, int rating) throws DaoException {
+        executeUpdate(UPDATE_RATING_QUERY, rating, foodId, userId);
     }
 }
