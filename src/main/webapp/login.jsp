@@ -33,7 +33,8 @@
             <input class="shadow" id="password" type="password" name="password"/>
         </div>
         <div style="color: red">${requestScope.errorMessage}</div>
-        <a href="registration.jsp">${registrate}</a>
+        <a href="<c:url value="controller?command=registrationPage"/>">${registrate}</a>
+
         <input type="submit" class="login_input" value="${enter}">
     </form>
 

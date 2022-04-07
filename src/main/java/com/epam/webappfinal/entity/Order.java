@@ -2,8 +2,6 @@ package com.epam.webappfinal.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 public class Order implements Identifiable, Serializable {
 

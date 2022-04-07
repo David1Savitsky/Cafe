@@ -42,10 +42,6 @@ public class DaoHelper implements AutoCloseable {
         return new CommentDaoImpl(connection);
     }
 
-//    public OrderDao createUserDao() {
-//        return new OrderDao(connection);
-//    }
-
     @Override
     public void close() throws DaoException {
         try {

@@ -13,6 +13,7 @@ public class ChangeRatingCommand implements Command {
     private static final String RATING_TEXT_REPRESENTATION = "rating";
     private static final String FOOD_ID_TEXT_REPRESENTATION = "foodId";
     private static final String RATING_PAGE_COMMAND = "controller?command=rating";
+    private static final String LOGIN_PAGE = "/login.jsp";
 
     private final FoodService foodService;
 
@@ -22,14 +23,17 @@ public class ChangeRatingCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        String foodIdStr = req.getParameter(FOOD_ID_TEXT_REPRESENTATION);
-        Long foodId = Long.parseLong(foodIdStr);
-        String ratingStr = req.getParameter(RATING_TEXT_REPRESENTATION);
-        int rating = Integer.parseInt(ratingStr);
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
-        foodService.changeRating(foodId, user.getId(), rating);
-
-        return CommandResult.redirect(RATING_PAGE_COMMAND);
+        if (user != null) {
+            String foodIdStr = req.getParameter(FOOD_ID_TEXT_REPRESENTATION);
+            Long foodId = Long.parseLong(foodIdStr);
+            String ratingStr = req.getParameter(RATING_TEXT_REPRESENTATION);
+            int rating = Integer.parseInt(ratingStr);
+            foodService.changeRating(foodId, user.getId(), rating);
+            return CommandResult.redirect(RATING_PAGE_COMMAND);
+        } else {
+            return CommandResult.forward(LOGIN_PAGE);
+        }
     }
 }

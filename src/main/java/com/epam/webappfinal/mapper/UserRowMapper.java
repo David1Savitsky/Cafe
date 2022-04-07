@@ -1,6 +1,5 @@
 package com.epam.webappfinal.mapper;
 
-import com.epam.webappfinal.entity.Identifiable;
 import com.epam.webappfinal.entity.User;
 
 import java.math.BigDecimal;

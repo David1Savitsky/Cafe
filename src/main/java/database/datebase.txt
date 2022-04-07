@@ -10,7 +10,7 @@ create table users(
     password varchar(32) not null,
     is_admin bool not null default 0,
     amount decimal(10,2) not null default 0,
-    loyalty_points int not null,
+    loyalty_points int not null default 30,
     is_blocked bool not null default 0
 );
 

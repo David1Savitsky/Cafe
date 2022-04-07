@@ -19,6 +19,7 @@ public class ShoppingCartCommand implements Command {
     private static final String FOOD_LIST_TEXT_REPRESENTATION = "foodList";
     private static final String FOOD_LIST_SIZE_TEXT_REPRESENTATION = "foodListSize";
     private static final String TOTAL_AMOUNT_TEXT_REPRESENTATION = "totalAmount";
+    private static final String LOGIN_PAGE = "/login.jsp";
 
     private final OrderService orderService;
 
@@ -33,15 +34,17 @@ public class ShoppingCartCommand implements Command {
         if (user != null) {
             BigDecimal accountMoney = user.getAmount();
             req.setAttribute(ACCOUNT_MONEY_VARIABLE_REPRESENTATION, accountMoney);
+
+            List<Pair<Food, Integer>> foodList = orderService.getFoodInShoppingCart(user.getId());
+            BigDecimal totalAmount = orderService.getTotalAmount(foodList, user.getLoyaltyPoints());
+
+            req.setAttribute(FOOD_LIST_TEXT_REPRESENTATION, foodList);
+            req.setAttribute(FOOD_LIST_SIZE_TEXT_REPRESENTATION, foodList.size());
+            req.setAttribute(TOTAL_AMOUNT_TEXT_REPRESENTATION, totalAmount);
+
+            return CommandResult.forward(SHOPPING_CART_PAGE);
+        } else {
+            return CommandResult.forward(LOGIN_PAGE);
         }
-
-        List<Pair<Food, Integer>> foodList = orderService.getFoodInShoppingCart(user.getId());
-        BigDecimal totalAmount = orderService.getTotalAmount(foodList, user.getLoyaltyPoints());
-
-        req.setAttribute(FOOD_LIST_TEXT_REPRESENTATION, foodList);
-        req.setAttribute(FOOD_LIST_SIZE_TEXT_REPRESENTATION, foodList.size());
-        req.setAttribute(TOTAL_AMOUNT_TEXT_REPRESENTATION, totalAmount);
-
-        return CommandResult.forward(SHOPPING_CART_PAGE);
     }
 }

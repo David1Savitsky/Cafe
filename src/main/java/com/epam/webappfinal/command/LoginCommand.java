@@ -39,19 +39,4 @@ public class LoginCommand implements Command {
         }
         return result;
     }
-
-//    public String execute(HttpServletRequest req, HttpServletResponse resp) {
-//        String login = req.getParameter("login");
-//        String password = req.getParameter("password");
-//        if (userService.login(login, password)) {
-//            //req.getSession().setAttribute("user", "admin");
-//
-//            //Подгружать с БД его данные
-//
-//            return "main.jsp";
-//        } else {
-//            req.setAttribute("errorMessage", "Invalid credentials");
-//            return "login.jsp";
-//        }
-//    }
 }

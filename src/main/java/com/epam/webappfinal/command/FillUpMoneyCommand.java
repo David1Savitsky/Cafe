@@ -16,6 +16,7 @@ public class FillUpMoneyCommand implements Command {
     private static final String POP_UP_TEXT_REPRESENTATION = "#popup";
     private static final String INVALID_INPUT = "Invalid input data";
     private static final String INVALID_ERROR_VARIABLE = "errorFillUp";
+    private static final String LOGIN_PAGE = "/login.jsp";
 
     private final UserService userService;
 
@@ -27,18 +28,23 @@ public class FillUpMoneyCommand implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
-        String cardNumber = req.getParameter(CARD_TEXT_REPRESENTATION);
-        String money = req.getParameter(MONEY_TEXT_REPRESENTATION);
-        boolean isSuccess = userService.isDeposited(user, cardNumber, money);
-        String requestedPage = req.getHeader(REFERER_TEXT_REPRESENTATION);
-        CommandResult result;
-        if (!isSuccess) {
-            session.setAttribute(INVALID_ERROR_VARIABLE, INVALID_INPUT);
-            result = CommandResult.redirect(requestedPage + POP_UP_TEXT_REPRESENTATION);
+        if (user != null) {
+            String cardNumber = req.getParameter(CARD_TEXT_REPRESENTATION);
+            String money = req.getParameter(MONEY_TEXT_REPRESENTATION);
+            boolean isSuccess = userService.isDeposited(user, cardNumber, money);
+            String requestedPage = req.getHeader(REFERER_TEXT_REPRESENTATION);
+            CommandResult result;
+            if (!isSuccess) {
+                session.setAttribute(INVALID_ERROR_VARIABLE, INVALID_INPUT);
+                result = CommandResult.redirect(requestedPage + POP_UP_TEXT_REPRESENTATION);
+            } else {
+                session.setAttribute(INVALID_ERROR_VARIABLE, null);
+                result = CommandResult.redirect(requestedPage);
+            }
+            return result;
         } else {
-            session.setAttribute(INVALID_ERROR_VARIABLE, null);
-            result = CommandResult.redirect(requestedPage);
+            return CommandResult.forward(LOGIN_PAGE);
         }
-        return result;
+
     }
 }

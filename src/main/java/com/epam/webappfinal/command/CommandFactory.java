@@ -14,7 +14,6 @@ public class CommandFactory {
     private static final String LANGUAGE_CHANGE_COMMAND = "languageChange";
     private static final String FOOD_TYPE_CHANGE_COMMAND = "foodChange";
     private static final String FILL_UP_MONEY_COMMAND = "fillUpMoney";
-    private static final String CHANGE_Q_INDEX_COMMAND = "changeQIndex";
     private static final String SHOPPING_CART_COMMAND = "shoppingCart";
     private static final String ADD_TO_SHOPPING_CART_COMMAND = "addToShoppingCart";
     private static final String DELETE_FROM_SHOPPING_CART_COMMAND = "deleteFromShopCart";
@@ -34,6 +33,10 @@ public class CommandFactory {
     private static final String RATING_COMMAND = "rating";
     private static final String ADD_COMMENT_COMMAND = "addComment";
     private static final String DELETE_COMMENT_ITEM_COMMAND = "deleteCommentItem";
+    private static final String PERSONAL_PAGE_COMMAND = "personal";
+    private static final String REGISTRATION_PAGE_COMMAND = "registrationPage";
+    private static final String REGISTRATION_COMMAND = "registration";
+    private static final String LOGIN_PAGE_COMMAND = "loginPage";
 
     public Command createCommand(String command) {
         switch (command){
@@ -51,8 +54,6 @@ public class CommandFactory {
                 return new FoodTypeChangeCommand(new FoodServiceImpl(new DaoHelperFactory()));
             case FILL_UP_MONEY_COMMAND:
                 return new FillUpMoneyCommand(new UserServiceImpl(new DaoHelperFactory()));
-            case CHANGE_Q_INDEX_COMMAND:
-                return new ChangeQIndexCommand();
             case SHOPPING_CART_COMMAND:
                 return new ShoppingCartCommand(new OrderServiceImpl(new DaoHelperFactory()));
             case ADD_TO_SHOPPING_CART_COMMAND:
@@ -91,6 +92,14 @@ public class CommandFactory {
                 return new AddCommentCommand(new FoodServiceImpl(new DaoHelperFactory()));
             case DELETE_COMMENT_ITEM_COMMAND:
                 return new DeleteCommentItemCommand(new FoodServiceImpl(new DaoHelperFactory()));
+            case PERSONAL_PAGE_COMMAND:
+                return new PersonalPageCommand();
+            case REGISTRATION_PAGE_COMMAND:
+                return new RegistrationPageCommand();
+            case REGISTRATION_COMMAND:
+                return new RegistrationCommand(new UserServiceImpl(new DaoHelperFactory()));
+            case LOGIN_PAGE_COMMAND:
+                return new LoginPageCommand();
             default:
                 throw new IllegalArgumentException("Unknown command = " + command);
         }

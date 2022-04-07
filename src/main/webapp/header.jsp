@@ -50,7 +50,7 @@
                 </a>
             </div>
             <div class="menu_item">
-                <a href="<c:url value="controller?command=mainPage"/>">
+                <a href="<c:url value="controller?command=personal"/>">
                     <img class="logo_image" src="static/images/logo.png" alt="">
                 </a>
             </div>

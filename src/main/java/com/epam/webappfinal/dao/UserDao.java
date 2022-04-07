@@ -10,6 +10,8 @@ public interface UserDao extends Dao<User> {
 
     Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException;
 
+    void register(String name, String surname, String login, String password) throws DaoException;
+
     List<User> getUsers() throws DaoException;
 
     void changeLoyaltyPoints(Long id, Integer loyaltyPoints) throws DaoException;

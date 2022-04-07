@@ -1,6 +1,5 @@
 package com.epam.webappfinal.service;
 
-import com.epam.webappfinal.dao.Dao;
 import com.epam.webappfinal.dao.DaoHelper;
 import com.epam.webappfinal.dao.DaoHelperFactory;
 import com.epam.webappfinal.dao.UserDao;
@@ -36,6 +35,33 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         return user;
+    }
+
+    @Override
+    public Optional<User> register(String name, String surname, String login, String password, String confirmedPassword, String rules) throws ServiceException {
+        if ("".equals(name) || "".equals(surname) || "".equals(password)
+                || !password.equals(confirmedPassword) || rules == null || !"yes".equals(rules)) {
+            return Optional.empty();
+        }
+
+        Optional<User> result;
+        try (DaoHelper helper = daoHelperFactory.create()) {
+            helper.startTransaction();
+            UserDao userDao = helper.createUserDao();
+            Optional<User> userOpt = userDao.findUserByLoginAndPassword(login, password);
+            if (userOpt.isPresent()) {
+                result = Optional.empty();
+            } else {
+                userDao.register(name, surname, login, password);
+                userOpt = userDao.findUserByLoginAndPassword(login, password);
+                return Optional.of(userOpt.get());
+            }
+            helper.endTransaction();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 
     @Override
@@ -152,5 +178,4 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
-
 }

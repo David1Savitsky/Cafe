@@ -7,6 +7,7 @@
 </c:if>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="language"/>
+
 <fmt:message key="lbl_price" var="lbl_price"/>
 <fmt:message key="btn_add_to_shopping_cart" var="btn_add_to_shopping_cart"/>
 <fmt:message key="order_food" var="order_food"/>

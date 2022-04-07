@@ -14,23 +14,11 @@ public class OrderRowMapper implements RowMapper<Order> {
     public Order map(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong(Order.ID);
 
-        //LocalDateTime visitingTime = LocalDateTime.ofInstant(resultSet.getDate(Order.VISITING_TIME).toInstant(), ZoneId.systemDefault());
         String visitingTimeStr = resultSet.getString(Order.VISITING_TIME);
-//        System.out.println(visitingTimeStr);
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        //LocalDateTime dateTime = LocalDateTime.parse(visitingTimeStr, formatter);
-//        try {
         visitingTimeStr = visitingTimeStr.replace(" ", "T");
         LocalDateTime visitingTime = LocalDateTime.parse(visitingTimeStr);
-//            System.out.println(dateTime);
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
 
-
-//        Date visitingTime = resultSet.getDate(Order.VISITING_TIME);
         Long userId = resultSet.getLong(Order.USER_ID);
-
         String paymentTypeLowerCaseLine = resultSet.getString(Order.PAYMENT_TYPE);
         String paymentTypeUpperCaseLine = paymentTypeLowerCaseLine.toUpperCase(Locale.ROOT);
         PaymentType type = PaymentType.valueOf(paymentTypeUpperCaseLine);

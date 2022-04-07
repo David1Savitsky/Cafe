@@ -23,6 +23,7 @@ public class RatingCommand implements Command {
     private static final String ACCOUNT_MONEY_VARIABLE_REPRESENTATION = "accountMoney";
     private static final String COMMENT_LIST_REPRESENTATION = "commentList";
     private static final String COMMENT_LIST_SIZE_REPRESENTATION = "commentListSize";
+    private static final String LOGIN_PAGE = "/login.jsp";
 
     private final FoodService foodService;
 
@@ -37,26 +38,29 @@ public class RatingCommand implements Command {
         if (user != null) {
             BigDecimal accountMoney = user.getAmount();
             req.setAttribute(ACCOUNT_MONEY_VARIABLE_REPRESENTATION, accountMoney);
-        }
-        String foodIdStr = req.getParameter(FOOD_ID_TEXT_REPRESENTATION);
-        if (foodIdStr == null) {
-            foodIdStr = (String) session.getAttribute(FOOD_ID_TEXT_REPRESENTATION);
+
+            String foodIdStr = req.getParameter(FOOD_ID_TEXT_REPRESENTATION);
+            if (foodIdStr == null) {
+                foodIdStr = (String) session.getAttribute(FOOD_ID_TEXT_REPRESENTATION);
+            } else {
+                session.setAttribute(FOOD_ID_TEXT_REPRESENTATION, foodIdStr);
+            }
+            Long foodId = Long.parseLong(foodIdStr);
+            Food food = foodService.getFoodById(foodId);
+            Rating rating = foodService.getRating(foodId, user.getId());
+
+            req.setAttribute(FOOD_TEXT_REPRESENTATION, food);
+            req.setAttribute(FOOD_ID_TEXT_REPRESENTATION, foodId);
+            req.setAttribute(RATING_ITEM_TEXT_REPRESENTATION, rating);
+
+            List<Pair<User, Comment>> commentList = foodService.getComments(foodId);
+            req.setAttribute(COMMENT_LIST_REPRESENTATION, commentList);
+            req.setAttribute(COMMENT_LIST_SIZE_REPRESENTATION, commentList.size());
+
+            return CommandResult.forward(RATING_PAGE);
         } else {
-            session.setAttribute(FOOD_ID_TEXT_REPRESENTATION, foodIdStr);
+            return CommandResult.forward(LOGIN_PAGE);
         }
-        Long foodId = Long.parseLong(foodIdStr);
-        Food food = foodService.getFoodById(foodId);
-        Rating rating = foodService.getRating(foodId, user.getId());
 
-        req.setAttribute(FOOD_TEXT_REPRESENTATION, food);
-        req.setAttribute(FOOD_ID_TEXT_REPRESENTATION, foodId);
-        req.setAttribute(RATING_ITEM_TEXT_REPRESENTATION, rating);
-
-        List<Pair<User, Comment>> commentList = foodService.getComments(foodId);
-        System.out.println(commentList);
-        req.setAttribute(COMMENT_LIST_REPRESENTATION, commentList);
-        req.setAttribute(COMMENT_LIST_SIZE_REPRESENTATION, commentList.size());
-
-        return CommandResult.forward(RATING_PAGE);
     }
 }

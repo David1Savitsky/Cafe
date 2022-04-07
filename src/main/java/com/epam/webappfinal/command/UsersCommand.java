@@ -13,6 +13,8 @@ import java.util.List;
 public class UsersCommand implements Command {
 
     private static final String USERS_PAGE = "/users.jsp";
+    private static final String USER_LIST_TEXT_REPRESENTATION = "userList";
+    private static final String LOGIN_PAGE = "/login.jsp";
 
     private final UserService userService;
 
@@ -22,8 +24,14 @@ public class UsersCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        List<User> userList = userService.getUsers();
-        req.setAttribute("userList", userList);
-        return CommandResult.forward(USERS_PAGE);
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(User.TABLE_NAME);
+        if (user != null) {
+            List<User> userList = userService.getUsers();
+            req.setAttribute(USER_LIST_TEXT_REPRESENTATION, userList);
+            return CommandResult.forward(USERS_PAGE);
+        } else {
+            return CommandResult.forward(LOGIN_PAGE);
+        }
     }
 }

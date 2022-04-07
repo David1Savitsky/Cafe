@@ -13,6 +13,7 @@ public class AddCommentCommand implements Command {
     private static final String COMMENT_TEXT_REPRESENTATION = "comment";
     private static final String FOOD_ID_TEXT_REPRESENTATION = "foodId";
     private static final String RATING_PAGE_COMMAND = "controller?command=rating";
+    private static final String LOGIN_PAGE = "/login.jsp";
 
     private final FoodService foodService;
 
@@ -22,13 +23,16 @@ public class AddCommentCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        String foodIdStr = req.getParameter(FOOD_ID_TEXT_REPRESENTATION);
-        Long foodId = Long.parseLong(foodIdStr);
-        String comment = req.getParameter(COMMENT_TEXT_REPRESENTATION);
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
-        foodService.addComment(foodId, user.getId(), comment);
-
-        return CommandResult.redirect(RATING_PAGE_COMMAND);
+        if (user != null) {
+            String foodIdStr = req.getParameter(FOOD_ID_TEXT_REPRESENTATION);
+            Long foodId = Long.parseLong(foodIdStr);
+            String comment = req.getParameter(COMMENT_TEXT_REPRESENTATION);
+            foodService.addComment(foodId, user.getId(), comment);
+            return CommandResult.redirect(RATING_PAGE_COMMAND);
+        } else {
+            return CommandResult.forward(LOGIN_PAGE);
+        }
     }
 }

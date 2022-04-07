@@ -12,6 +12,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "select * from users where login = ? and password = MD5(?) ;";
     private static final String GET_ALL_USERS_QUERY = "select * from users";
     private static final String UPDATE_LOYALTY_POINTS_QUERY = "update users set loyalty_points = ? where id = ?; ";
+    private static final String INSERT_NEW_USER = "insert into users set name = ?, surname = ?, login = ?, password = MD5(?); ";
+//    private static final String INSERT_NEW_USER = "insert into users (name, surname, login, password) values (%s, %s, %s, MD5(%s)); ";
 
     public UserDaoImpl(Connection connection) {
         super(connection, new UserRowMapper(), User.TABLE_NAME);
@@ -23,6 +25,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 FIND_BY_LOGIN_AND_PASSWORD,
                 login,
                 password);
+    }
+
+    @Override
+    public void register(String name, String surname, String login, String password) throws DaoException {
+//        String query = String.format(INSERT_NEW_USER, name, surname, login, password);
+        executeUpdate(INSERT_NEW_USER, name, surname, login, password);
     }
 
     @Override

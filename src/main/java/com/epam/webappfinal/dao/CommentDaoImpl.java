@@ -4,7 +4,6 @@ import com.epam.webappfinal.entity.Comment;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.DaoException;
 import com.epam.webappfinal.mapper.CommentRowMapper;
-import com.epam.webappfinal.mapper.FoodRowMapper;
 import com.epam.webappfinal.mapper.UserRowMapper;
 import javafx.util.Pair;
 

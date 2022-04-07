@@ -51,7 +51,6 @@
                                 <c:if test="${sessionScope.users.admin}">
                                     <th>${lbl_status}</th>
                                 </c:if>
-                                    <%--                        <th>Оценка</th>--%>
 
                             </tr>
 

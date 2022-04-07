@@ -1,6 +1,5 @@
 package com.epam.webappfinal.mapper;
 
-import com.epam.webappfinal.entity.Identifiable;
 import com.epam.webappfinal.entity.OrdersFood;
 
 import java.sql.ResultSet;

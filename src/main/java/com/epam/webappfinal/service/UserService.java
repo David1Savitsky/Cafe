@@ -10,6 +10,9 @@ public interface UserService {
 
     Optional<User> login(String login, String password) throws ServiceException;
 
+    Optional<User> register(String name, String surname, String login,
+                              String password, String confirmedPassword, String rules) throws  ServiceException;
+
     boolean isDeposited(User user, String card, String money) throws ServiceException;
 
     List<User> getUsers() throws ServiceException;

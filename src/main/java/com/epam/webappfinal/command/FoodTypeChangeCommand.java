@@ -21,6 +21,7 @@ public class FoodTypeChangeCommand implements Command{
     private static final String FOOD_LIST_TEXT_REPRESENTATION = "foodList";
     private static final String FOOD_TYPE_LIST_TEXT_REPRESENTATION = "foodTypeList";
     private static final String MAIN_PAGE = "/main.jsp";
+    private static final String LOGIN_PAGE = "/login.jsp";
 
     private final FoodService foodService;
 
@@ -30,19 +31,22 @@ public class FoodTypeChangeCommand implements Command{
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        String selectedFoodTypeStr = req.getParameter(TYPE);
-        Long selectedFoodTypeId = Long.parseLong(selectedFoodTypeStr);
-        List<Food> foodList = foodService.getFood(selectedFoodTypeId);
-        List<FoodType> foodTypeList = foodService.getTypeList();
-        req.setAttribute(FOOD_TYPE_LIST_TEXT_REPRESENTATION, foodTypeList);
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
         if (user != null) {
+            String selectedFoodTypeStr = req.getParameter(TYPE);
+            Long selectedFoodTypeId = Long.parseLong(selectedFoodTypeStr);
+            List<Food> foodList = foodService.getFood(selectedFoodTypeId);
+            List<FoodType> foodTypeList = foodService.getTypeList();
+            req.setAttribute(FOOD_TYPE_LIST_TEXT_REPRESENTATION, foodTypeList);
             BigDecimal accountMoney = user.getAmount();
             req.setAttribute(ACCOUNT_MONEY_TEXT_REPRESENTATION, accountMoney);
+            req.setAttribute(FOOD_LIST_SIZE_TEXT_REPRESENTATION, foodList.size());
+            req.setAttribute(FOOD_LIST_TEXT_REPRESENTATION, foodList);
+            return CommandResult.forward(MAIN_PAGE);
+        } else {
+            return CommandResult.forward(LOGIN_PAGE);
         }
-        req.setAttribute(FOOD_LIST_SIZE_TEXT_REPRESENTATION, foodList.size());
-        req.setAttribute(FOOD_LIST_TEXT_REPRESENTATION, foodList);
-        return CommandResult.forward(MAIN_PAGE);
+
     }
 }

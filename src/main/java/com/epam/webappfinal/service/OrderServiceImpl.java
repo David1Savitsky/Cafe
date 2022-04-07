@@ -136,19 +136,15 @@ public class OrderServiceImpl implements OrderService{
         if ((date.compareTo(now) <= 0) || (user.getAmount().compareTo(totalAmount) == -1)) {
             return false;
         }
+        if (user.getAmount().subtract(totalAmount).compareTo(new BigDecimal(0)) < 0) {
+            return false;
+        }
 
         try (DaoHelper helper = daoHelperFactory.create()) {
             helper.startTransaction();
             if (paymentType.equals(PaymentType.ACCOUNT)) {
                 user.setAmount(user.getAmount().subtract(totalAmount));
             }
-//            int loyaltyPoints = user.getLoyaltyPoints();
-//            Integer totalAmountInt = Integer.valueOf(totalAmount.intValue());
-//            if ((loyaltyPoints + totalAmountInt) >= MAX_POINTS_NUMBER) {
-//                user.setLoyaltyPoints(MAX_POINTS_NUMBER);
-//            } else {
-//                user.setLoyaltyPoints(loyaltyPoints + totalAmountInt);
-//            }
             UserDao userDao = helper.createUserDao();
             userDao.save(user);
 

@@ -19,6 +19,7 @@ public class OrdersCommand implements Command {
     private static final String ORDER_LIST_SIZE_TEXT_REPRESENTATION = "orderListSize";
     private static final String ORDER_LIST_TEXT_REPRESENTATION = "orderList";
     private static final String ORDER_PAGE = "/orders.jsp";
+    private static final String LOGIN_PAGE = "/login.jsp";
 
     private final OrderService orderService;
 
@@ -28,20 +29,23 @@ public class OrdersCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
-        List<ImmutableTriple<Order, List<Food>, BigDecimal>> orderList;
-        if (user.isAdmin()) {
-            orderList = orderService.getOrdersWithFood();
-        } else {
-            BigDecimal accountMoney = user.getAmount();
-            req.setAttribute(ACCOUNT_MONEY_TEXT_REPRESENTATION, accountMoney);
-            orderList = orderService.getOrdersWithFood(user.getId());
-        }
+        if (user != null) {
+            List<ImmutableTriple<Order, List<Food>, BigDecimal>> orderList;
+            if (user.isAdmin()) {
+                orderList = orderService.getOrdersWithFood();
+            } else {
+                BigDecimal accountMoney = user.getAmount();
+                req.setAttribute(ACCOUNT_MONEY_TEXT_REPRESENTATION, accountMoney);
+                orderList = orderService.getOrdersWithFood(user.getId());
+            }
 
-        req.setAttribute(ORDER_LIST_TEXT_REPRESENTATION, orderList);
-        req.setAttribute(ORDER_LIST_SIZE_TEXT_REPRESENTATION, orderList.size());
-        return CommandResult.forward(ORDER_PAGE);
+            req.setAttribute(ORDER_LIST_TEXT_REPRESENTATION, orderList);
+            req.setAttribute(ORDER_LIST_SIZE_TEXT_REPRESENTATION, orderList.size());
+            return CommandResult.forward(ORDER_PAGE);
+        } else {
+            return CommandResult.forward(LOGIN_PAGE);
+        }
     }
 }

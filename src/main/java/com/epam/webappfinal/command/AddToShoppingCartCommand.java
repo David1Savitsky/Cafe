@@ -3,16 +3,16 @@ package com.epam.webappfinal.command;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.OrderService;
-import com.mysql.cj.Session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.util.Locale;
 
 public class AddToShoppingCartCommand implements Command {
 
-    private static final String REFERER_TEXT_REPRESENTATION = "referer";
-
+    private static final String LOGIN_PAGE = "/login.jsp";
 
     private final OrderService orderService;
 
@@ -22,18 +22,16 @@ public class AddToShoppingCartCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-
-        String foodIdStr = req.getParameter("foodId");
-        Long foodId = Long.parseLong(foodIdStr);
         HttpSession session = req.getSession();
-        User user = (User)session.getAttribute(User.TABLE_NAME);
+        User user = (User) session.getAttribute(User.TABLE_NAME);
+        if (user != null) {
+            String foodIdStr = req.getParameter("foodId");
+            Long foodId = Long.parseLong(foodIdStr);
 
-        orderService.addFoodToShoppingCart(foodId, user.getId());
-        //session.setAttribute("is_added", "true");
-
-        String requestedPage = req.getHeader(REFERER_TEXT_REPRESENTATION);
-        //req.setAttribute("foodType", "drink");
-        //return CommandResult.redirect(requestedPage);
-        return CommandResult.redirect("controller?command=mainPage");
+            orderService.addFoodToShoppingCart(foodId, user.getId());
+            return CommandResult.redirect("controller?command=mainPage");
+        } else {
+            return CommandResult.forward(LOGIN_PAGE);
+        }
     }
 }

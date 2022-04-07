@@ -2,7 +2,6 @@ package com.epam.webappfinal.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class Food implements Identifiable, Serializable {
 
