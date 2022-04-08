@@ -5,12 +5,16 @@ import com.epam.webappfinal.entity.*;
 import com.epam.webappfinal.exception.DaoException;
 import com.epam.webappfinal.exception.ServiceException;
 import javafx.util.Pair;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 public class FoodServiceImpl implements FoodService {
+
+    private final Logger LOGGER = LogManager.getLogger();
 
     private final DaoHelperFactory daoHelperFactory;
 
@@ -25,6 +29,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             FoodDao foodDao = helper.createFoodDao();
             listFromDao = foodDao.getAllNotDisabled();
+            LOGGER.debug("List of food has got");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -39,6 +44,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             FoodDao foodDao = helper.createFoodDao();
             listFromDao = foodDao.getAllNotDisabled(typeId);
+            LOGGER.debug("List of food has got using typeId");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -53,6 +59,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             FoodTypeDao foodTypeDao = helper.createFoodTypeDao();
             foodTypeList = foodTypeDao.getTypes();
+            LOGGER.debug("List of food type has got");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -66,6 +73,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             FoodDao foodDao = helper.createFoodDao();
             foodDao.makeDisabledFoodById(foodId);
+            LOGGER.debug("Food item is deleted by id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -78,6 +86,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             FoodDao foodDao = helper.createFoodDao();
             foodDao.save(new Food(id, name, typeId, price, false));
+            LOGGER.debug("Food item is saved by id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -98,6 +107,7 @@ public class FoodServiceImpl implements FoodService {
             }
             FoodDao foodDao = helper.createFoodDao();
             foodDao.save(new Food(null, name, typeId, price, false));
+            LOGGER.debug("Food item is added by id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -111,6 +121,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             RatingDao ratingDao = helper.createRatingDao();
             rating = ratingDao.getRatingByFoodId(foodId, userId);
+            LOGGER.debug("Food rating has got by id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -124,6 +135,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             FoodDao foodDao = helper.createFoodDao();
             foodDao.updateRating(foodId, userId, rating);
+            LOGGER.debug("Food rating is changed by id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -140,6 +152,7 @@ public class FoodServiceImpl implements FoodService {
             if (foodEnt.isPresent()) {
                 food = foodEnt.get();
             }
+            LOGGER.debug("Food item has got by id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -153,6 +166,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             CommentDao commentDao = helper.createCommentDao();
             commentDao.insertComment(foodId, userId, comment);
+            LOGGER.debug("Food comment is added by id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -166,6 +180,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             CommentDao commentDao = helper.createCommentDao();
             commentList = commentDao.getComments(foodId);
+            LOGGER.debug("List of food has got by food id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -179,6 +194,7 @@ public class FoodServiceImpl implements FoodService {
             helper.startTransaction();
             CommentDao commentDao = helper.createCommentDao();
             commentDao.removeById(commentId);
+            LOGGER.debug("Food comment is deleted by comment id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);

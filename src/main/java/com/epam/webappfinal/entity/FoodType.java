@@ -24,4 +24,12 @@ public class FoodType implements Identifiable, Serializable {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "FoodType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

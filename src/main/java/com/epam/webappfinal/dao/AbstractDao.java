@@ -23,8 +23,6 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
     private static final String UPDATE_QUERY_END = "WHERE id = ?";
     private static final String INSERT_QUERY_BEGINNING = "INSERT INTO %s SET";
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
     private final Connection connection;
     private final RowMapper<T> rowMapper;
     private final String tableName;
@@ -65,7 +63,6 @@ public abstract class AbstractDao <T extends Identifiable> implements Dao<T> {
         try (PreparedStatement statement = createStatement(query, params)) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.throwing(e);
             throw new DaoException(e);
         }
     }

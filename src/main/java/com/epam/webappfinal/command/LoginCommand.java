@@ -3,12 +3,16 @@ package com.epam.webappfinal.command;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 public class LoginCommand implements Command {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String LOGIN_TEXT_REPRESENTATION = "login";
     private static final String PASSWORD_TEXT_REPRESENTATION = "password";
@@ -26,6 +30,7 @@ public class LoginCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        LOGGER.debug("Starting logging in");
         String login = req.getParameter(LOGIN_TEXT_REPRESENTATION);
         String password = req.getParameter(PASSWORD_TEXT_REPRESENTATION);
         Optional<User> user = userService.login(login, password);

@@ -3,6 +3,8 @@ package com.epam.webappfinal;
 import com.epam.webappfinal.command.Command;
 import com.epam.webappfinal.command.CommandFactory;
 import com.epam.webappfinal.command.CommandResult;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Controller extends HttpServlet {
+
+    private final Logger LOGGER = LogManager.getLogger();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,6 +35,7 @@ public class Controller extends HttpServlet {
             CommandResult result = action.execute(req, resp);
             dispatch(req, resp, result);
         } catch (Exception e) {
+            LOGGER.error("Exception occurred", e);
             dispatch(req, resp, CommandResult.forward("/error.jsp"));
         }
     }

@@ -6,12 +6,16 @@ import com.epam.webappfinal.dao.UserDao;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.DaoException;
 import com.epam.webappfinal.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
+
+    private final Logger LOGGER = LogManager.getLogger();
 
     private static final Integer CARD_NUMBER_LENGTH = 16;
     private static final Integer MIN_LOYALTY_POINTS_NUMBER = 0;
@@ -30,6 +34,7 @@ public class UserServiceImpl implements UserService {
             helper.startTransaction();
             UserDao dao = helper.createUserDao();
             user = dao.findUserByLoginAndPassword(login, password);
+            LOGGER.debug("User is logged in");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -56,6 +61,7 @@ public class UserServiceImpl implements UserService {
                 userOpt = userDao.findUserByLoginAndPassword(login, password);
                 return Optional.of(userOpt.get());
             }
+            LOGGER.debug("User is registrated");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -93,6 +99,7 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+        LOGGER.debug("Money are deposited on cart");
         return true;
     }
 
@@ -103,6 +110,7 @@ public class UserServiceImpl implements UserService {
             helper.startTransaction();
             UserDao userDao = helper.createUserDao();
             userList = userDao.getUsers();
+            LOGGER.debug("User list has got");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -118,6 +126,7 @@ public class UserServiceImpl implements UserService {
             User user = userDao.getById(id).get();
             user.setBlocked(!user.isBlocked());
             userDao.save(user);
+            LOGGER.debug("User block is changed");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -133,6 +142,7 @@ public class UserServiceImpl implements UserService {
             helper.startTransaction();
             UserDao userDao = helper.createUserDao();
             userDao.changeLoyaltyPoints(id, loyaltyPoints);
+            LOGGER.debug("User loyalty points are changed");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -153,7 +163,7 @@ public class UserServiceImpl implements UserService {
                 user.setLoyaltyPoints(loyaltyPoints - FINED_LOYALTY_POINTS);
             }
             userDao.save(user);
-
+            LOGGER.debug("User is fined");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -173,6 +183,7 @@ public class UserServiceImpl implements UserService {
                 user.setLoyaltyPoints(user.getLoyaltyPoints() + loyaltyPoints);
             }
             userDao.save(user);
+            LOGGER.debug("User is rewarded");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);

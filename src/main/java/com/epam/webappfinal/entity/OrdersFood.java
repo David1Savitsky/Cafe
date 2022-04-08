@@ -39,4 +39,14 @@ public class OrdersFood implements Identifiable, Serializable {
     public Long getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "OrdersFood{" +
+                "id=" + id +
+                ", orderId=" + orderId +
+                ", foodId=" + foodId +
+                ", count=" + count +
+                '}';
+    }
 }

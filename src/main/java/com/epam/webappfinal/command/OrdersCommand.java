@@ -6,6 +6,8 @@ import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.OrderService;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class OrdersCommand implements Command {
+
+    private final Logger LOGGER = LogManager.getLogger();
 
     private static final String ACCOUNT_MONEY_TEXT_REPRESENTATION = "accountMoney";
     private static final String ORDER_LIST_SIZE_TEXT_REPRESENTATION = "orderListSize";
@@ -29,6 +33,7 @@ public class OrdersCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        LOGGER.debug("Start accepting order page");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
         if (user != null) {

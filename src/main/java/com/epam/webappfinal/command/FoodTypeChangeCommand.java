@@ -5,6 +5,8 @@ import com.epam.webappfinal.entity.FoodType;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.FoodService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FoodTypeChangeCommand implements Command{
+
+    private final Logger LOGGER = LogManager.getLogger();
 
     private static final String TYPE = "typeName";
     private static final String ACCOUNT_MONEY_TEXT_REPRESENTATION = "accountMoney";
@@ -31,6 +35,7 @@ public class FoodTypeChangeCommand implements Command{
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        LOGGER.debug("Start changing food type");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
         if (user != null) {

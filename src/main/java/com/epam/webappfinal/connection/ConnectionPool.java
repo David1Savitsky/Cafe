@@ -1,12 +1,16 @@
 package com.epam.webappfinal.connection;
 
 import com.epam.webappfinal.exception.DaoException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final int MAXIMUM_CONNECTIONS = 10;
 
@@ -38,6 +42,7 @@ public class ConnectionPool {
                 connectionsLock.unlock();
             }
         }
+        LOGGER.debug("Connection instance was initialized");
         return localConnectionPool;
     }
 

@@ -15,8 +15,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class OrderServiceImpl implements OrderService{
+
+    private final Logger LOGGER = LogManager.getLogger();
 
     private static final Double DISCOUNT_FACTOR = 0.001;
 
@@ -43,6 +47,7 @@ public class OrderServiceImpl implements OrderService{
             } else {
                 ordersFoodDao.operateWithOrderDao(orderId, foodId, OperationType.INCREMENT);
             }
+            LOGGER.debug("Food item is added to shopping cart");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -61,6 +66,7 @@ public class OrderServiceImpl implements OrderService{
             } else {
                 ordersFoodDao.operateWithOrderDao(orderId, foodId, OperationType.DELETE);
             }
+            LOGGER.debug("Amount of food is decremented at the shopping cart");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -103,6 +109,7 @@ public class OrderServiceImpl implements OrderService{
             Long orderId = orderDao.getOrderIdInProcess(userId);
             OrdersFoodDao ordersFoodDao = helper.createOrdersFoodDao();
             foodList = ordersFoodDao.getFoodInShoppingCart(orderId);
+            LOGGER.debug("List of food has got in shopping cart");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -151,6 +158,7 @@ public class OrderServiceImpl implements OrderService{
             OrderDao orderDao = helper.createOrderDao();
             Long orderId = orderDao.getOrderIdInProcess(user.getId());
             orderDao.setOrder(orderId, date, paymentType.toString().toLowerCase(Locale.ROOT));
+            LOGGER.debug("Order has done");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -166,6 +174,7 @@ public class OrderServiceImpl implements OrderService{
             helper.startTransaction();
             OrdersFoodDao ordersFoodDao = helper.createOrdersFoodDao();
             ordersWithFood = ordersFoodDao.getOrdersWithFood(userId);
+            LOGGER.debug("Food list with total price and orders has got by user id");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -180,6 +189,7 @@ public class OrderServiceImpl implements OrderService{
             helper.startTransaction();
             OrdersFoodDao ordersFoodDao = helper.createOrdersFoodDao();
             ordersWithFood = ordersFoodDao.getOrdersWithFood();
+            LOGGER.debug("Food list with total price and orders has got");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -193,6 +203,7 @@ public class OrderServiceImpl implements OrderService{
             helper.startTransaction();
             OrderDao orderDao = helper.createOrderDao();
             orderDao.updateStatus(orderId, operationType);
+            LOGGER.debug("Order is handled");
             helper.endTransaction();
         } catch (DaoException e) {
             throw new ServiceException(e);

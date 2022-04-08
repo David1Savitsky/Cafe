@@ -4,6 +4,8 @@ import com.epam.webappfinal.entity.PaymentType;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.OrderService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +14,8 @@ import java.math.BigDecimal;
 import java.util.Locale;
 
 public class PayOrderCommand implements Command {
+
+    private final Logger LOGGER = LogManager.getLogger();
 
     private static final String DATE_TEXT_REPRESENTATION = "date";
     private static final String TYPE_TEXT_REPRESENTATION = "type";
@@ -29,6 +33,7 @@ public class PayOrderCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        LOGGER.debug("Start paying the order");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
         if (user != null) {

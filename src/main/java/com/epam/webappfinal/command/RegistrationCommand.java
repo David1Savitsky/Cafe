@@ -3,6 +3,8 @@ package com.epam.webappfinal.command;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class RegistrationCommand implements Command {
+
+    private final Logger LOGGER = LogManager.getLogger();
 
     private static final String NAME_TEXT_REPRESENTATION = "name";
     private static final String SURNAME_TEXT_REPRESENTATION = "surname";
@@ -31,6 +35,7 @@ public class RegistrationCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        LOGGER.debug("Start registering");
         String name = req.getParameter(NAME_TEXT_REPRESENTATION);
         String surname = req.getParameter(SURNAME_TEXT_REPRESENTATION);
         String login = req.getParameter(LOGIN_TEXT_REPRESENTATION);

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ResourceBundleManager">
-    <file url="file://$PROJECT_DIR$/src/main/resources/lang_by.properties" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/lang_en.properties" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/lang_ru.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/language__en.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/language__uk.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/language_bel.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/language_by.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/language_en.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/language_uk.properties" />
     <custom-resource-bundle>
-      <file value="file://$PROJECT_DIR$/src/main/resources/lang_by.properties" />
-      <file value="file://$PROJECT_DIR$/src/main/resources/lang_en.properties" />
-      <file value="file://$PROJECT_DIR$/src/main/resources/lang_ru.properties" />
-      <base-name>lang</base-name>
+      <file value="file://$PROJECT_DIR$/src/main/resources/language_bel.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/language_en.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/language_uk.properties" />
+      <base-name>language</base-name>
     </custom-resource-bundle>
   </component>
 </project>

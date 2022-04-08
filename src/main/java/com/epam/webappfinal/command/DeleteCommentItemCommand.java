@@ -3,12 +3,16 @@ package com.epam.webappfinal.command;
 import com.epam.webappfinal.entity.User;
 import com.epam.webappfinal.exception.ServiceException;
 import com.epam.webappfinal.service.FoodService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class DeleteCommentItemCommand implements Command {
+
+    private final Logger LOGGER = LogManager.getLogger();
 
     private static final String COMMENT_ID_TEXT_REPRESENTATION = "commentId";
     private static final String RATING_PAGE_COMMAND = "controller?command=rating";
@@ -22,9 +26,10 @@ public class DeleteCommentItemCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        LOGGER.debug("Admin start deleting food comment");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(User.TABLE_NAME);
-        if (user != null) {
+        if (user != null && user.isAdmin()) {
             String commentIdStr = req.getParameter(COMMENT_ID_TEXT_REPRESENTATION);
             Long commentId = Long.parseLong(commentIdStr);
             foodService.deleteComment(commentId);
