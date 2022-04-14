@@ -34,6 +34,9 @@ public class UserServiceImpl implements UserService {
             helper.startTransaction();
             UserDao dao = helper.createUserDao();
             user = dao.findUserByLoginAndPassword(login, password);
+            if (user.isPresent() && user.get().isBlocked()) {
+                user = Optional.empty();
+            }
             LOGGER.debug("User is logged in");
             helper.endTransaction();
         } catch (DaoException e) {

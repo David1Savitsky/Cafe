@@ -13,7 +13,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String GET_ALL_USERS_QUERY = "select * from users";
     private static final String UPDATE_LOYALTY_POINTS_QUERY = "update users set loyalty_points = ? where id = ?; ";
     private static final String INSERT_NEW_USER = "insert into users set name = ?, surname = ?, login = ?, password = MD5(?); ";
-//    private static final String INSERT_NEW_USER = "insert into users (name, surname, login, password) values (%s, %s, %s, MD5(%s)); ";
 
     public UserDaoImpl(Connection connection) {
         super(connection, new UserRowMapper(), User.TABLE_NAME);
