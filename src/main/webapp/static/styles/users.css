@@ -1,0 +1,86 @@
+body{
+    background: url('../images/background3.jpg') 50% 50%/cover no-repeat fixed;
+    font-size: 16px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.container{
+    margin-left: 15%;
+    margin-top: 3%;
+    width: 70%;
+    overflow: hidden;
+    border: 1px solid #C5C5C5;
+    background: #fff;
+}
+
+.title {
+    color: gray;
+    margin: 10px 10px 0 10px;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+
+table tr th {
+    padding-bottom: 15px;
+}
+
+table tr td {
+    padding-bottom: 15px;
+    width: 15;
+}
+
+table tr td .points {
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+}
+
+td .button{
+    padding: 0 45px;
+    cursor: pointer;
+    background: rgb(83, 252, 41);
+    height: 35px;
+    line-height: 33px;
+    width: auto;
+    padding: 0 20px;
+    color: #F4F4F4;
+    font: bold 14px/35px 'Ubuntu',"Myriad Pro",sans-serif;
+    border: 1px solid #DFDDDD;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 0 #500;
+    transition: .3s ease;
+}
+
+td .button:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25),  0 10px 10px rgba(0,0,0,0.22);
+    color: #222222;
+}
+
+.locks {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.opened_lock {
+    display: inline-block;
+    background: url('../images/opened-lock.png') 0 0 no-repeat;
+    width: 52px;
+    height: 30px;
+}
+
+.closed_lock {
+    display: inline-block;
+    background: url('../images/closed-lock.png') 0 0 no-repeat;
+    width: 52px;
+    height: 30px;
+}

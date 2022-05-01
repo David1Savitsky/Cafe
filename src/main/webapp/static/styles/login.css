@@ -1,0 +1,106 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+*,*::before,*::after{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+:focus,:active{outline: none;}
+a:focus,:active{outline: none;}
+
+nav,footer,header,aside{display: block;}
+
+html,body{
+    height: 100%;
+    width: 100%;
+    font-size: 100%;
+    line-height: 1;
+    font-size: 14px;    
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+input,button,textarea{font-family: inherit;}
+
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner{padding: 0;border: 0;}
+a, a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+
+/* --------------------------------------------- */
+
+body{
+    background: url('../images/background3.jpg') 50% 50%/cover no-repeat fixed;
+    font-size: 16px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.login{
+    margin: 10% 30%;
+    background: rgb(255, 255, 255);
+    padding: 30px 60px;
+    line-height: 2;
+    font-size: 16px;
+    border-radius: 20px;
+ }
+
+.logpass{
+    display: block;
+}
+
+.login .logpass .shadow{
+    width: 80%;
+    height: 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    border-width: 2px;
+    border: black;
+    padding-left: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+ }
+
+
+
+ a{
+    color:rgb(245, 11, 11);
+    text-decoration: underline;
+}
+
+.register{
+    padding-top: 7px;
+}
+
+.login_input{
+    cursor: pointer;
+    background: #F4F4F4;
+    height: 35px;
+    line-height: 33px;
+    width: auto;
+    padding: 0 20px;
+    color: #4D4D4D;
+    font: bold 14px/35px 'Ubuntu',"Myriad Pro",sans-serif;
+    border: 1px solid #DFDDDD;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 0 #500;
+    transition: .3s ease;
+    margin-top: 10px;
+    background-color: rgb(83, 252, 41);
+    float: right;
+}
+
+.login_input:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25),  0 10px 10px rgba(0,0,0,0.22);
+}
+

@@ -1,0 +1,256 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+*,*::before,*::after{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+:focus,:active{outline: none;}
+a:focus,:active{outline: none;}
+
+nav,footer,header,aside{display: block;}
+
+html,body{
+    height: 100%;
+    width: 100%;
+    font-size: 100%;
+    line-height: 1;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+input,button,textarea{font-family: inherit;}
+
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner{padding: 0;border: 0;}
+a, a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+
+/* --------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: url('../images/background3.jpg') 50% 50%/cover no-repeat fixed;
+    font-size: 16px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.btn_order{
+    cursor: pointer;
+    background: #F4F4F4;
+    height: 35px;
+    line-height: 33px;
+    width: auto;
+    padding: 0 20px;
+    color: #FB9721;
+    font: bold 14px/35px 'Ubuntu',"Myriad Pro",sans-serif;
+    border: 1px solid #DFDDDD;
+    border-radius: 5px;
+    display: inline-block;
+    float: right;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 0 #500;
+    transition: .3s ease;
+}
+
+.btn_order:hover{
+    color: darkgreen;
+}
+
+/* Style the top navigation bar */
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+}
+
+/* Style the topnav links */
+.topnav button {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Change color on hover */
+.topnav button:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Create three unequal columns that floats next to each other */
+.column {
+    float: left;
+    padding: 10px;
+}
+
+/* Left and right column */
+.column.side {
+    border: 1px solid #b6a6a6;
+    border-radius: 10px;
+    background-color: #DA9B65;
+    min-height: 150px;
+    margin: 10px;
+    width: 23%;
+    color: #1F0101;
+    line-height: 1.5;
+}
+
+.elem {
+    font-size: 1.5em;
+    width: 100%;
+    color: burlywood;
+    text-decoration: underline;
+}
+
+.remove{
+    display: inline-block;
+    text-indent: -999999px;
+    background: url('../images/delete_img.png') 0 0 no-repeat;
+    width: 14px;
+    height: 13px;
+    float: right;
+}
+
+.elem1 {
+    text-decoration: underline;
+    color: burlywood;
+}
+
+.elem2 {
+    width: 35px;
+    color: burlywood;
+    text-decoration: underline;
+}
+
+.elem3 {
+    font-size: 1.5em;
+    width: 100%;
+    color: burlywood;
+    font-weight: 900;
+}
+
+.elem3:hover {
+    cursor: pointer;
+    color: #0D0101;
+}
+
+.col{
+
+}
+
+.col4{
+    width: 11rem;
+    margin-top: 4px;
+    padding: 0;
+    float: left;
+}
+
+.col4 .q{
+    padding-bottom: 5px;
+}
+
+.star {
+    cursor: pointer;
+    color: #E7B500;
+    background-color: white;
+    font-size: 22px;
+
+}
+
+/*.order-add {*/
+/*    display: flex;*/
+/*    justify-content: flex-end;*/
+/*}*/
+
+/*.order-add img {*/
+/*    width: 30px;*/
+/*    height: 30px;*/
+/*    margin-right: 10px;*/
+/*}*/
+
+.minus{
+    display: inline-block;
+    background: url('../images/plus_minus.png') 0 0 no-repeat;
+    width: 36px;
+    height: 35px;
+    text-indent: -9999px;
+    vertical-align: middle;
+}
+
+.col4 .inputbox{
+    background: url('../images/q_inp.png') 0 0 repeat-x;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    width: 40px;
+    text-align: center;
+    border-radius: 0;
+    z-index: 1;
+    margin: 0 -4px;
+    height: 34px;
+    border-bottom: 1px solid #E3E3E3;
+}
+
+.plus{
+    display: inline-block;
+    background: url('../images/plus_minus.png') -36px 0 no-repeat;
+    width: 36px;
+    height: 35px;
+    text-indent: -9999px;
+    vertical-align: middle;
+}
+
+/*.item .col4 .price{*/
+/*    color: #7C7C7C;*/
+/*    font-size: 14px;*/
+/*}*/
+
+/*.item .col4 .total{*/
+/*    color: #7C7C7C;*/
+/*    font-size: 20px;*/
+/*    line-height: 22px;*/
+/*    font-weight: bold;*/
+/*}*/
+
+.row{
+    height: 100%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .column.side, .column.middle {
+        width: 100%;
+    }
+}
+
+/* Style the footer */
+/*.footer {*/
+/*    color: #919191;*/
+/*    height: 60px;*/
+/*    padding: 10px;*/
+/*    text-align: center;*/
+/*}*/
